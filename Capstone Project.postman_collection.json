@@ -1,259 +1,359 @@
 {
-  "info": {
-    "_postman_id": "d0700d24-79ec-487e-8403-b565bef7f8e0",
-    "name": "Udacity Cloud Developer Capstone Project",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-  },
-  "item": [
-    {
-      "name": "Recipes",
-      "item": [
-        {
-          "name": "Get all recipes",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{authToken}}",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": ""
-            },
-            "url": {
-              "raw": "https://{{apiId}}.execute-api.{{region}}.amazonaws.com/dev/recipes",
-              "protocol": "https",
-              "host": [
-                "{{apiId}}",
-                "execute-api",
-                "{{region}}",
-                "amazonaws",
-                "com"
-              ],
-              "path": [
-                "dev",
-                "recipes"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Create recipe",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "name": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{authToken}}",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n\t\"name\": \"My famous soup\",\n\t\"recipe\": \"Ingredients: ...\"\n}"
-            },
-            "url": {
-              "raw": "https://{{apiId}}.execute-api.{{region}}.amazonaws.com/dev/recipes",
-              "protocol": "https",
-              "host": [
-                "{{apiId}}",
-                "execute-api",
-                "{{region}}",
-                "amazonaws",
-                "com"
-              ],
-              "path": [
-                "dev",
-                "recipes"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Update recipe",
-          "request": {
-            "method": "PATCH",
-            "header": [
-              {
-                "key": "Content-Type",
-                "name": "Content-Type",
-                "type": "text",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "type": "text",
-                "value": "Bearer {{authToken}}"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n\t\"name\": \"My famous desert\",\n\t\"recipe\": \"For this delicious desert you take ...\"\n}"
-            },
-            "url": {
-              "raw": "https://{{apiId}}.execute-api.{{region}}.amazonaws.com/dev/recipes/<recipe_id>",
-              "protocol": "https",
-              "host": [
-                "{{apiId}}",
-                "execute-api",
-                "{{region}}",
-                "amazonaws",
-                "com"
-              ],
-              "path": [
-                "dev",
-                "recipes",
-                "<recipe_id>"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Delete recipe",
-          "request": {
-            "method": "DELETE",
-            "header": [
-              {
-                "key": "Authorization",
-                "type": "text",
-                "value": "Bearer {{authToken}}"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": ""
-            },
-            "url": {
-              "raw": "https://{{apiId}}.execute-api.{{region}}.amazonaws.com/dev/recipes/<recipe_id>",
-              "protocol": "https",
-              "host": [
-                "{{apiId}}",
-                "execute-api",
-                "{{region}}",
-                "amazonaws",
-                "com"
-              ],
-              "path": [
-                "dev",
-                "recipes",
-                "<recipe_id>"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Get attachment URL",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{authToken}}",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": ""
-            },
-            "url": {
-              "raw": "https://{{apiId}}.execute-api.{{region}}.amazonaws.com/dev/recipes/<recipe_id>/attachment",
-              "protocol": "https",
-              "host": [
-                "{{apiId}}",
-                "execute-api",
-                "{{region}}",
-                "amazonaws",
-                "com"
-              ],
-              "path": [
-                "dev",
-                "recipes",
-                "<recipe_id>",
-                "attachment"
-              ]
-            }
-          },
-          "response": []
-        }
-      ],
-      "event": [
-        {
-          "listen": "prerequest",
-          "script": {
-            "id": "ce2b42d4-8cc5-4f30-a6ed-e7f0f303c3fd",
-            "type": "text/javascript",
-            "exec": [
-              ""
-            ]
-          }
-        },
-        {
-          "listen": "test",
-          "script": {
-            "id": "efb16c49-3866-4241-97d1-360ad72736d8",
-            "type": "text/javascript",
-            "exec": [
-              ""
-            ]
-          }
-        }
-      ]
-    }
-  ],
-  "event": [
-    {
-      "listen": "prerequest",
-      "script": {
-        "id": "2e83c0fe-6650-44d5-a90f-4c27ff720d83",
-        "type": "text/javascript",
-        "exec": [
-          ""
-        ]
-      }
-    },
-    {
-      "listen": "test",
-      "script": {
-        "id": "977c227e-2df3-42eb-9a48-ec25e2f7eeae",
-        "type": "text/javascript",
-        "exec": [
-          ""
-        ]
-      }
-    }
-  ],
-  "variable": [
-    {
-      "id": "bf208e6b-f66d-4008-9366-dd541ff65425",
-      "key": "apiId",
-      "value": "",
-      "type": "string"
-    },
-    {
-      "id": "5c37344f-2af2-4876-b70b-546d0cf7f0a5",
-      "key": "region",
-      "value": "",
-      "type": "string"
-    },
-    {
-      "id": "9bc6399a-d2bb-4f2d-9ffa-8480370d383c",
-      "key": "authToken",
-      "value": "",
-      "type": "string"
-    }
-  ]
+	"info": {
+		"_postman_id": "bb231e2b-7ef0-4ce4-b6ae-16c630ce36b3",
+		"name": "Udacity Cloud Developer Capstone Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Recipes",
+			"item": [
+				{
+					"name": "Get all recipes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const schema = {\r",
+									"    \"$schema\": \"http://json-schema.org/draft-07/schema#\",\r",
+									"    \"type\": \"object\",\r",
+									"    \"required\": [\r",
+									"        \"recipes\"\r",
+									"    ],\r",
+									"    \"additionalProperties\": false,\r",
+									"    \"properties\": {\r",
+									"        \"recipes\": {\r",
+									"            \"type\": \"array\",\r",
+									"            \"items\": {\r",
+									"                \"type\": \"object\",\r",
+									"                \"required\": [\r",
+									"                    \"userId\",\r",
+									"                    \"recipeId\",\r",
+									"                    \"name\",\r",
+									"                    \"recipe\",\r",
+									"                    \"attachments\"\r",
+									"                ],\r",
+									"                \"additionalProperties\": false,\r",
+									"                \"properties\": {\r",
+									"                    \"userId\": {\r",
+									"                        \"type\": \"string\",\r",
+									"                    },\r",
+									"                    \"recipeId\": {\r",
+									"                        \"type\": \"string\",\r",
+									"                    },\r",
+									"                    \"name\": {\r",
+									"                        \"type\": \"string\",\r",
+									"                    },\r",
+									"                    \"recipe\": {\r",
+									"                        \"type\": \"string\",\r",
+									"                    },\r",
+									"                    \"attachments\": {\r",
+									"                        \"type\": \"array\",\r",
+									"                        \"items\": {\r",
+									"                            \"type\": \"string\"\r",
+									"                        }\r",
+									"                    }\r",
+									"                }\r",
+									"            }\r",
+									"        }\r",
+									"    }\r",
+									"}\r",
+									"\r",
+									"pm.test('Schema is valid', function () {\r",
+									"     pm.response.to.have.jsonSchema(schema)\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{apiId}}.execute-api.{{region}}.amazonaws.com/dev/recipes",
+							"protocol": "https",
+							"host": [
+								"{{apiId}}",
+								"execute-api",
+								"{{region}}",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"recipes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create recipe",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"const schema = {\r",
+									"    \"$schema\": \"http://json-schema.org/draft-07/schema#\",\r",
+									"    \"type\": \"object\",\r",
+									"    \"required\": [\r",
+									"        \"userId\",\r",
+									"        \"recipeId\",\r",
+									"        \"name\",\r",
+									"        \"recipe\",\r",
+									"        \"attachments\"\r",
+									"    ],\r",
+									"    \"additionalProperties\": false,\r",
+									"    \"properties\": {\r",
+									"        \"userId\": {\r",
+									"            \"type\": \"string\",\r",
+									"        },\r",
+									"        \"recipeId\": {\r",
+									"            \"type\": \"string\",\r",
+									"        },\r",
+									"        \"name\": {\r",
+									"            \"type\": \"string\",\r",
+									"        },\r",
+									"        \"recipe\": {\r",
+									"            \"type\": \"string\",\r",
+									"        },\r",
+									"        \"attachments\": {\r",
+									"            \"type\": \"array\",\r",
+									"            \"items\": {\r",
+									"                \"type\": \"string\"\r",
+									"            }\r",
+									"        }\r",
+									"    }\r",
+									"}\r",
+									"\r",
+									"pm.test('Schema is valid', function () {\r",
+									"     pm.response.to.have.jsonSchema(schema)\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"My famous soup\",\n\t\"recipe\": \"Ingredients: ...\"\n}"
+						},
+						"url": {
+							"raw": "https://{{apiId}}.execute-api.{{region}}.amazonaws.com/dev/recipes",
+							"protocol": "https",
+							"host": [
+								"{{apiId}}",
+								"execute-api",
+								"{{region}}",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"recipes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update recipe",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"My famous desert\",\n\t\"recipe\": \"For this delicious desert you take ...\"\n}"
+						},
+						"url": {
+							"raw": "https://{{apiId}}.execute-api.{{region}}.amazonaws.com/dev/recipes/<recipe_id>",
+							"protocol": "https",
+							"host": [
+								"{{apiId}}",
+								"execute-api",
+								"{{region}}",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"recipes",
+								"<recipe_id>"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete recipe",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{apiId}}.execute-api.{{region}}.amazonaws.com/dev/recipes/<recipe_id>",
+							"protocol": "https",
+							"host": [
+								"{{apiId}}",
+								"execute-api",
+								"{{region}}",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"recipes",
+								"<recipe_id>"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get attachment URL",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{apiId}}.execute-api.{{region}}.amazonaws.com/dev/recipes/<recipe_id>/attachment",
+							"protocol": "https",
+							"host": [
+								"{{apiId}}",
+								"execute-api",
+								"{{region}}",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"recipes",
+								"<recipe_id>",
+								"attachment"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "apiId",
+			"value": "nrrq2bc855"
+		},
+		{
+			"key": "region",
+			"value": "eu-central-1"
+		},
+		{
+			"key": "authToken",
+			"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImJCb19fZmE3enNjbzFudkJUR1Q0WCJ9.eyJpc3MiOiJodHRwczovL2Rldi1iaXJucWt6NC5ldS5hdXRoMC5jb20vIiwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMTc5MTg0Mjk3MTM5MzQzOTkxOTUiLCJhdWQiOiJSejJZTDhWQTBzZ0FpNUg2cWdCODN0U21RWHd5Y1R2QyIsImlhdCI6MTYxMzg1NzEzMCwiZXhwIjoxNjEzODkzMTMwLCJhdF9oYXNoIjoiaENoUmFyWmpINGtnTWpoeVhJXzF0QSIsIm5vbmNlIjoiQzVYblpiY3Jkfmhsd250dGJRdjY0X3lEZVVUb1FDeS0ifQ.Q9lS5LJuf_fY1fgmJ67x8bl38GP15XSrAAL3ri2liNFlAXnO1u_Q6AmmYdax0EFBFlE8S8EV5QRrQ65x9aUAG37ui_x6DM12pAnqfSi4IBLR1S_qVvzklWXn0pR968pZt-cmd-5O2bOzNHH5N1UoOsgam3wuDtJev1kXKN7ZqIccLw7hOU1se7oyyaCY-HMgrluWtkaF4CLS8UVgseHbklZzSCPTz5PfQWoVz3FY9Ia1z_2HylZa3S-2mVfQbkIUB-yKbVS7TXUF77qsdF-VJPPQXTzGUnlP1KSEq3ttBT-vqavUYTKL0zikPx1BIX6RJw78KJUM6Fg8JhbWvyWxzw"
+		}
+	]
 }
