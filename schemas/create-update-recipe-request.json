@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema#",
+  "title": "create recipe request",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100
+    },
+    "recipe": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 10000
+    }
+  },
+  "required": [
+    "name",
+    "recipe"
+  ],
+  "additionalProperties": false
+}
