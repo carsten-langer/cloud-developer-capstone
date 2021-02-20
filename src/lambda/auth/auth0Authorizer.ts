@@ -6,7 +6,7 @@ import {APIGatewayAuthorizerResult, APIGatewayTokenAuthorizerEvent} from 'aws-la
 
 const logger = createLogger('auth')
 
-const cert = '-----BEGIN CERTIFICATE-----' +
+const cert = '-----BEGIN CERTIFICATE-----\n' +
     'MIIDDTCCAfWgAwIBAgIJVDUAvLTh0pEVMA0GCSqGSIb3DQEBCwUAMCQxIjAgBgNV\n' +
     'BAMTGWRldi1iaXJucWt6NC5ldS5hdXRoMC5jb20wHhcNMjEwMjE0MTYwNTAwWhcN\n' +
     'MzQxMDI0MTYwNTAwWjAkMSIwIAYDVQQDExlkZXYtYmlybnFrejQuZXUuYXV0aDAu\n' +
