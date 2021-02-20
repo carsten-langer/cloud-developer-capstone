@@ -23,6 +23,14 @@ export class RecipesAccess {
         }).promise()
         return result.Items as Recipe[]
     }
+
+    async createRecipeItem(recipe: Recipe): Promise<void> {
+        logger.info('createRecipeItem', recipe)
+        await this.docClient.put({
+            TableName: this.recipesTable,
+            Item: {...recipe}
+        }).promise()
+    }
 }
 
 function createDynamoDBClient() {

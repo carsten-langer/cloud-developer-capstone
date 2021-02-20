@@ -3,5 +3,5 @@ export interface Recipe {
     recipeId: string
     name: string
     recipe: string
-    attachments: [string]
+    attachments: [string?]
 }

@@ -47,6 +47,30 @@ functions:
           - xray:PutTelemetryRecords
         Resource: "*"
 
+  CreateRecipe:
+    handler: src/lambda/http/createRecipe.handler
+    events:
+      - http:
+          method: post
+          path: recipes
+          cors: true
+          authorizer: RS256Auth
+          request:
+            schema:
+              application/json: ${file(schemas/create-update-recipe-request.json)}
+    environment:
+      RECIPES_TABLE: ${self:custom.recipesTable}
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:PutItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.recipesTable}
+      - Effect: Allow
+        Action:
+          - xray:PutTraceSegments
+          - xray:PutTelemetryRecords
+        Resource: "*"
+
 resources:
   Resources:
     GatewayResponseDefault4XX:
