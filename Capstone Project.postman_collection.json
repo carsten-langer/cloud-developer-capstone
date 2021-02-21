@@ -118,8 +118,7 @@
 									"        \"userId\",\r",
 									"        \"recipeId\",\r",
 									"        \"name\",\r",
-									"        \"recipe\",\r",
-									"        \"attachments\"\r",
+									"        \"recipe\"\r",
 									"    ],\r",
 									"    \"additionalProperties\": false,\r",
 									"    \"properties\": {\r",
@@ -136,10 +135,7 @@
 									"            \"type\": \"string\",\r",
 									"        },\r",
 									"        \"attachments\": {\r",
-									"            \"type\": \"array\",\r",
-									"            \"items\": {\r",
-									"                \"type\": \"string\"\r",
-									"            }\r",
+									"            \"type\": \"string\"\r",
 									"        }\r",
 									"    }\r",
 									"}\r",
@@ -171,6 +167,64 @@
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"name\": \"My famous soup\",\n\t\"recipe\": \"Ingredients: ...\"\n}"
+						},
+						"url": {
+							"raw": "https://{{apiId}}.execute-api.{{region}}.amazonaws.com/dev/recipes",
+							"protocol": "https",
+							"host": [
+								"{{apiId}}",
+								"execute-api",
+								"{{region}}",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"recipes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create recipe - Malformed",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Your test name\", function () {\r",
+									"    var jsonData = pm.response.json()\r",
+									"    pm.expect(jsonData.message).to.eql(\"Invalid request body\")\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"\",\n\t\"recipe\": \"empty name will not be accepted\"\n}"
 						},
 						"url": {
 							"raw": "https://{{apiId}}.execute-api.{{region}}.amazonaws.com/dev/recipes",
@@ -298,6 +352,92 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Create recipe Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"const schema = {\r",
+									"    \"$schema\": \"http://json-schema.org/draft-07/schema#\",\r",
+									"    \"type\": \"object\",\r",
+									"    \"required\": [\r",
+									"        \"userId\",\r",
+									"        \"recipeId\",\r",
+									"        \"name\",\r",
+									"        \"recipe\"\r",
+									"    ],\r",
+									"    \"additionalProperties\": false,\r",
+									"    \"properties\": {\r",
+									"        \"userId\": {\r",
+									"            \"type\": \"string\",\r",
+									"        },\r",
+									"        \"recipeId\": {\r",
+									"            \"type\": \"string\",\r",
+									"        },\r",
+									"        \"name\": {\r",
+									"            \"type\": \"string\",\r",
+									"        },\r",
+									"        \"recipe\": {\r",
+									"            \"type\": \"string\",\r",
+									"        },\r",
+									"        \"attachments\": {\r",
+									"            \"type\": \"string\"\r",
+									"        }\r",
+									"    }\r",
+									"}\r",
+									"\r",
+									"pm.test('Schema is valid', function () {\r",
+									"     pm.response.to.have.jsonSchema(schema)\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"My famous soup\",\n\t\"recipe\": \"Ingredients: ...\"\n}"
+						},
+						"url": {
+							"raw": "https://{{apiId}}.execute-api.{{region}}.amazonaws.com/dev/recipes",
+							"protocol": "https",
+							"host": [
+								"{{apiId}}",
+								"execute-api",
+								"{{region}}",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"recipes"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"event": [
@@ -353,7 +493,7 @@
 		},
 		{
 			"key": "authToken",
-			"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImJCb19fZmE3enNjbzFudkJUR1Q0WCJ9.eyJpc3MiOiJodHRwczovL2Rldi1iaXJucWt6NC5ldS5hdXRoMC5jb20vIiwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMTc5MTg0Mjk3MTM5MzQzOTkxOTUiLCJhdWQiOiJSejJZTDhWQTBzZ0FpNUg2cWdCODN0U21RWHd5Y1R2QyIsImlhdCI6MTYxMzg1NzEzMCwiZXhwIjoxNjEzODkzMTMwLCJhdF9oYXNoIjoiaENoUmFyWmpINGtnTWpoeVhJXzF0QSIsIm5vbmNlIjoiQzVYblpiY3Jkfmhsd250dGJRdjY0X3lEZVVUb1FDeS0ifQ.Q9lS5LJuf_fY1fgmJ67x8bl38GP15XSrAAL3ri2liNFlAXnO1u_Q6AmmYdax0EFBFlE8S8EV5QRrQ65x9aUAG37ui_x6DM12pAnqfSi4IBLR1S_qVvzklWXn0pR968pZt-cmd-5O2bOzNHH5N1UoOsgam3wuDtJev1kXKN7ZqIccLw7hOU1se7oyyaCY-HMgrluWtkaF4CLS8UVgseHbklZzSCPTz5PfQWoVz3FY9Ia1z_2HylZa3S-2mVfQbkIUB-yKbVS7TXUF77qsdF-VJPPQXTzGUnlP1KSEq3ttBT-vqavUYTKL0zikPx1BIX6RJw78KJUM6Fg8JhbWvyWxzw"
+			"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImJCb19fZmE3enNjbzFudkJUR1Q0WCJ9.eyJpc3MiOiJodHRwczovL2Rldi1iaXJucWt6NC5ldS5hdXRoMC5jb20vIiwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMTc5MTg0Mjk3MTM5MzQzOTkxOTUiLCJhdWQiOiJSejJZTDhWQTBzZ0FpNUg2cWdCODN0U21RWHd5Y1R2QyIsImlhdCI6MTYxMzkyNDkwMSwiZXhwIjoxNjEzOTYwOTAxLCJhdF9oYXNoIjoiYVlNWVgtUml4ejFyb2Y5ZUVxaF9iQSIsIm5vbmNlIjoiY35ocGhCM1A2VGZBZ1QxTWM1RTFBZ0h1VlFNd3pUMkYifQ.fOt_PywTzRNP-reXNj3KuZXwD54HZAfzCvZ9HCpa-te7bYgS0H10VcmHZr4Fg4CFsPz0cIPFtHhcnqAWnBXT_G4KyzGTnTstdny8DTeqMmz17qQ3Yq9xO5nrle7JahiEr8D-0cyhmlVKXY-yGJyT-fId6hrAMwhz8Y_yL7JtNnt1AO8Ee2IhI1aIXMd7iS_Eteva2AeYg4Kx3xat1sGy1aPPlrSa1XvA2ko2pu6VLKpHiw2CrsAdjNnXVS4vfcYGJxWubuqemgkt70s0iv8JnH6WNqIjQT78TdslaCFtlKtXgPpzCnI7BKMVWdMVUYsnPs3dar5EixvPa5jpvomw0g"
 		}
 	]
 }

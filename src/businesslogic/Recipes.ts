@@ -15,8 +15,7 @@ export async function createRecipeItem(recipeRequest: RecipeRequest, userId: str
         userId: userId,
         recipeId: recipeId,
         name: recipeRequest.name,
-        recipe: recipeRequest.recipe,
-        attachments: []
+        recipe: recipeRequest.recipe
     }
 
     await recipesAccess.createRecipeItem(newRecipe)
