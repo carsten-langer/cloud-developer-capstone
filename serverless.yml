@@ -1,5 +1,4 @@
 service: serverless-recipe-app
-#  unresolvedVariablesNotificationMode: info
 
 plugins:
   - serverless-webpack
@@ -19,15 +18,15 @@ provider:
     apiGateway: true
 
 custom:
-  recipesTable: recipesTable-${self:provider.stage}
+  recipeItemsTable: recipeItemsTable-${self:provider.stage}
 
 functions:
 
   RS256Auth:
     handler: src/lambda/auth/auth0Authorizer.handler
 
-  GetRecipes:
-    handler: src/lambda/http/getRecipes.handler
+  GetRecipeItems:
+    handler: src/lambda/http/getRecipeItems.handler
     events:
       - http:
           method: get
@@ -35,20 +34,20 @@ functions:
           cors: true
           authorizer: RS256Auth
     environment:
-      RECIPES_TABLE: ${self:custom.recipesTable}
+      RECIPE_ITEMS_TABLE: ${self:custom.recipeItemsTable}
     iamRoleStatements:
       - Effect: Allow
         Action:
           - dynamodb:Query
-        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.recipesTable}
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.recipeItemsTable}
       - Effect: Allow
         Action:
           - xray:PutTraceSegments
           - xray:PutTelemetryRecords
         Resource: "*"
 
-  CreateRecipe:
-    handler: src/lambda/http/createRecipe.handler
+  CreateRecipeItem:
+    handler: src/lambda/http/createRecipeItem.handler
     events:
       - http:
           method: post
@@ -57,14 +56,38 @@ functions:
           authorizer: RS256Auth
           request:
             schema:
-              application/json: ${file(schemas/create-update-recipe-request.json)}
+              application/json: ${file(schemas/create-update-recipe-item-request.json)}
     environment:
-      RECIPES_TABLE: ${self:custom.recipesTable}
+      RECIPE_ITEMS_TABLE: ${self:custom.recipeItemsTable}
     iamRoleStatements:
       - Effect: Allow
         Action:
           - dynamodb:PutItem
-        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.recipesTable}
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.recipeItemsTable}
+      - Effect: Allow
+        Action:
+          - xray:PutTraceSegments
+          - xray:PutTelemetryRecords
+        Resource: "*"
+
+  UpdateRecipeItem:
+    handler: src/lambda/http/updateRecipeItem.handler
+    events:
+      - http:
+          method: patch
+          path: recipes/{recipeId}
+          cors: true
+          authorizer: RS256Auth
+          request:
+            schema:
+              application/json: ${file(schemas/create-update-recipe-item-request.json)}
+    environment:
+      RECIPE_ITEMS_TABLE: ${self:custom.recipeItemsTable}
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:UpdateItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.recipeItemsTable}
       - Effect: Allow
         Action:
           - xray:PutTraceSegments
@@ -82,9 +105,9 @@ resources:
           gatewayresponse.header.Access-Control-Allow-Methods: "'GET,OPTIONS,POST'"
         ResponseType: DEFAULT_4XX
         RestApiId:
-          Ref: ApiGatewayRestApi  # refers to the resource created by cloudformation stack if ther is a function which uses the api gateway.
+          Ref: ApiGatewayRestApi  # refers to the resource created by cloudformation stack if there is a function which uses the api gateway.
 
-    TodosDynamoDBTable:
+    RecipeItemsDynamoDBTable:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
@@ -100,4 +123,4 @@ resources:
         BillingMode: PAY_PER_REQUEST
         StreamSpecification:
           StreamViewType: NEW_IMAGE
-        TableName: ${self:custom.recipesTable}
+        TableName: ${self:custom.recipeItemsTable}

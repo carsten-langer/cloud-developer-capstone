@@ -9,7 +9,7 @@
 			"name": "Recipes",
 			"item": [
 				{
-					"name": "Get all recipes",
+					"name": "Get all recipe items",
 					"event": [
 						{
 							"listen": "test",
@@ -101,7 +101,7 @@
 					"response": []
 				},
 				{
-					"name": "Create recipe",
+					"name": "Create recipe item",
 					"event": [
 						{
 							"listen": "test",
@@ -187,7 +187,7 @@
 					"response": []
 				},
 				{
-					"name": "Create recipe - Malformed",
+					"name": "Create recipe item - malformed",
 					"event": [
 						{
 							"listen": "test",
@@ -245,7 +245,21 @@
 					"response": []
 				},
 				{
-					"name": "Update recipe",
+					"name": "Update recipe item",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "PATCH",
 						"header": [
@@ -264,6 +278,65 @@
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"name\": \"My famous desert\",\n\t\"recipe\": \"For this delicious desert you take ...\"\n}"
+						},
+						"url": {
+							"raw": "https://{{apiId}}.execute-api.{{region}}.amazonaws.com/dev/recipes/<recipe_id>",
+							"protocol": "https",
+							"host": [
+								"{{apiId}}",
+								"execute-api",
+								"{{region}}",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"recipes",
+								"<recipe_id>"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update recipe item - malformed",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Your test name\", function () {\r",
+									"    var jsonData = pm.response.json()\r",
+									"    pm.expect(jsonData.message).to.eql(\"Invalid request body\")\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"wrong recipe name makes reqeust fail\",\n\t\"recipe_wrong\": \"wrong recipe name makes reqeust fail\"\n}"
 						},
 						"url": {
 							"raw": "https://{{apiId}}.execute-api.{{region}}.amazonaws.com/dev/recipes/<recipe_id>",

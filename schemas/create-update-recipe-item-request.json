@@ -1,16 +1,22 @@
 {
   "$schema": "https://json-schema.org/draft/2019-09/schema#",
-  "title": "delete recipe attachment request",
+  "title": "create or update recipe item request",
   "type": "object",
   "properties": {
-    "attachmentDeletionUrl": {
+    "name": {
       "type": "string",
       "minLength": 1,
-      "maxLength": 1000
+      "maxLength": 100
+    },
+    "recipe": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 10000
     }
   },
   "required": [
-    "attachmentDeletionUrl"
+    "name",
+    "recipe"
   ],
   "additionalProperties": false
 }

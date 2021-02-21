@@ -146,20 +146,20 @@ Authorization is implemented via a Lambda authorizer (formerly known as a custom
 
 A function implementing the Lambda authorizer (formerly known as a custom authorizer) for the API Gateway.
 
-### `getRecipes`
+### `getRecipeItems`
 
 A function to return all recipe items for the user requesting it.
 The user id is extracted from the JWT token that is sent by the client.
 The function returns the list of recipe items using the recipe items model shown above.
 
-### `createRecipe`
+### `createRecipeItem`
 
 A function to create a new recipe item for the user requesting it.
 The user id is extracted from the JWT token that is sent by the client.
 The request must follow the creation request model shown above, which is enforced.
 The answer contains the new recipe using the recipe item model as shown above.
 
-### `updateRecipe`
+### `updateRecipeItem`
 
 A function to update a recipe item for the user requesting it.
 The user id is extracted from the JWT token that is sent by the client.
@@ -167,7 +167,7 @@ The id of the recipe item that should be updated is passed as a URL parameter.
 The request must follow the update request model shown above, which is enforced.
 It returns an empty answer.
 
-### `deleteRecipe`
+### `deleteRecipeItem`
 
 A function to delete a recipe and the associated attachment for the user requesting it.
 The id of the recipe item that should be deleted is passed as a URL parameter.
@@ -205,14 +205,21 @@ The application uses distributed tracing via X-Ray.
 ## Prepared statements
 
 ### Get all recipes
-Gets all recipes of the user represented by the JWT token.
+Gets all recipe items of the user represented by the JWT token.
 Built-in tests check on HTTP return code 200 and schema of the answer.
 
-### Create recipe
-Creates a new recipe for the user represented by the JWT token.
+### Create recipe item
+Creates a new recipe item for the user represented by the JWT token.
 Built-in tests check on HTTP return code 201 and schema of the answer.
 
-### Create recipe - Malformed
-Creates a malformed request for a new recipe which will be rejected by API gateway schema checks.
+### Create recipe item - malformed
+A malformed recipe creation request which will be rejected by API gateway schema checks.
 Built-in tests check on HTTP return code 400 and content of failure message.
 
+### Update recipe item
+Updates a new recipe item for the user represented by the JWT token.
+Built-in tests check on HTTP return code 204.
+
+### Update recipe item - malformed
+A malformed recipe update request which will be rejected by API gateway schema checks.
+Built-in tests check on HTTP return code 400 and content of failure message.

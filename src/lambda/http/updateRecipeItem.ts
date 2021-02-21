@@ -1,23 +1,25 @@
 import 'source-map-support/register'
 import {APIGatewayProxyEvent, APIGatewayProxyResult} from 'aws-lambda'
 import {cors} from 'middy/middlewares'
-import {getRecipeItems} from '../../businesslogic/Recipes'
-import {getUserId} from '../utils'
 import {createLogger} from '../../utils/logger'
+import {getUserId} from '../utils'
+import {updateRecipeItem} from '../../businesslogic/RecipeItems'
 
-const middy = require('middy')
-const logger = createLogger('getRecipes')
+const middy = require("middy")
+const logger = createLogger('updateRecipeItem')
 
 export const handler = middy(async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     logger.info('Processing event', event)
 
     const userId = getUserId(event)
-    const recipesResult = {recipes: await getRecipeItems(userId)}
+    const recipeId = event.pathParameters.recipeId
+    const recipeItemRequest = JSON.parse(event.body)
+    await updateRecipeItem(userId, recipeId, recipeItemRequest)
 
-    logger.info('Returning', recipesResult)
+    logger.info('Returning 204')
     return {
-        statusCode: 200,
-        body: JSON.stringify(recipesResult)
+        statusCode: 204,
+        body: ''
     }
 })
 

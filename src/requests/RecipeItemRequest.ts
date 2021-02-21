@@ -1,4 +1,4 @@
-export interface RecipeRequest {
+export interface RecipeItemRequest {
     name: string
     recipe: string
 }

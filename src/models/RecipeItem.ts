@@ -1,4 +1,4 @@
-export interface Recipe {
+export interface RecipeItem {
     userId: string
     recipeId: string
     name: string
