@@ -19,6 +19,8 @@ provider:
 
 custom:
   recipeItemsTable: recipeItemsTable-${self:provider.stage}
+  attachmentsS3Bucket: recipe-attachments-bucket-${self:provider.stage}
+  attachmentsS3UrlExpirationSeconds: 300
 
 functions:
 
@@ -94,6 +96,29 @@ functions:
           - xray:PutTelemetryRecords
         Resource: "*"
 
+  GenerateUploadUrl:
+    handler: src/lambda/http/generateUploadUrl.handler
+    events:
+      - http:
+          method: post
+          path: recipes/{recipeId}/attachment
+          cors: true
+          authorizer: RS256Auth
+    environment:
+      AttTODOS_TABLE: ${self:custom.todosTable}
+      ATTACHMENTS_S3_BUCKET: ${self:custom.attachmentsS3Bucket}
+      ATTACHMENTS_S3_SIGNED_URL_EXPIRATION: ${self:custom.attachmentsS3UrlExpirationSeconds}
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - s3:PutObject
+        Resource: arn:aws:s3:::${self:custom.attachmentsS3Bucket}/*
+      - Effect: Allow
+        Action:
+          - xray:PutTraceSegments
+          - xray:PutTelemetryRecords
+        Resource: "*"
+
 resources:
   Resources:
     GatewayResponseDefault4XX:
@@ -124,3 +149,33 @@ resources:
         StreamSpecification:
           StreamViewType: NEW_IMAGE
         TableName: ${self:custom.recipeItemsTable}
+
+    AttachmentsBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.attachmentsS3Bucket}
+        CorsConfiguration:
+          CorsRules:
+            - AllowedOrigins:
+                - '*'
+              AllowedHeaders:
+                - '*'
+              AllowedMethods:
+                - GET
+                - PUT
+                - HEAD
+              MaxAge: 3000
+
+    BucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        PolicyDocument:
+          Id: AttachmentsS3BucketPolicy
+          Version: "2012-10-17"
+          Statement:
+            - Sid: PublicReadForGetBucketObjects
+              Effect: Allow
+              Principal: '*'
+              Action: 's3:GetObject'
+              Resource: 'arn:aws:s3:::${self:custom.attachmentsS3Bucket}/*'
+        Bucket: !Ref AttachmentsBucket

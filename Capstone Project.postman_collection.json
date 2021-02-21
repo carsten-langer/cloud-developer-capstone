@@ -35,8 +35,7 @@
 									"                    \"userId\",\r",
 									"                    \"recipeId\",\r",
 									"                    \"name\",\r",
-									"                    \"recipe\",\r",
-									"                    \"attachments\"\r",
+									"                    \"recipe\"\r",
 									"                ],\r",
 									"                \"additionalProperties\": false,\r",
 									"                \"properties\": {\r",
@@ -52,11 +51,8 @@
 									"                    \"recipe\": {\r",
 									"                        \"type\": \"string\",\r",
 									"                    },\r",
-									"                    \"attachments\": {\r",
-									"                        \"type\": \"array\",\r",
-									"                        \"items\": {\r",
-									"                            \"type\": \"string\"\r",
-									"                        }\r",
+									"                    \"attachmentUrl\": {\r",
+									"                        \"type\": \"string\",\r",
 									"                    }\r",
 									"                }\r",
 									"            }\r",
@@ -280,7 +276,7 @@
 							"raw": "{\n\t\"name\": \"My famous desert\",\n\t\"recipe\": \"For this delicious desert you take ...\"\n}"
 						},
 						"url": {
-							"raw": "https://{{apiId}}.execute-api.{{region}}.amazonaws.com/dev/recipes/<recipe_id>",
+							"raw": "https://{{apiId}}.execute-api.{{region}}.amazonaws.com/dev/recipes/918087f7-b4e0-41e4-b9e7-7db15bf844a8",
 							"protocol": "https",
 							"host": [
 								"{{apiId}}",
@@ -292,7 +288,7 @@
 							"path": [
 								"dev",
 								"recipes",
-								"<recipe_id>"
+								"918087f7-b4e0-41e4-b9e7-7db15bf844a8"
 							]
 						}
 					},
@@ -339,7 +335,7 @@
 							"raw": "{\n\t\"name\": \"wrong recipe name makes reqeust fail\",\n\t\"recipe_wrong\": \"wrong recipe name makes reqeust fail\"\n}"
 						},
 						"url": {
-							"raw": "https://{{apiId}}.execute-api.{{region}}.amazonaws.com/dev/recipes/<recipe_id>",
+							"raw": "https://{{apiId}}.execute-api.{{region}}.amazonaws.com/dev/recipes/918087f7-b4e0-41e4-b9e7-7db15bf844a8",
 							"protocol": "https",
 							"host": [
 								"{{apiId}}",
@@ -351,7 +347,7 @@
 							"path": [
 								"dev",
 								"recipes",
-								"<recipe_id>"
+								"918087f7-b4e0-41e4-b9e7-7db15bf844a8"
 							]
 						}
 					},
@@ -386,41 +382,6 @@
 								"dev",
 								"recipes",
 								"<recipe_id>"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get attachment URL",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "https://{{apiId}}.execute-api.{{region}}.amazonaws.com/dev/recipes/<recipe_id>/attachment",
-							"protocol": "https",
-							"host": [
-								"{{apiId}}",
-								"execute-api",
-								"{{region}}",
-								"amazonaws",
-								"com"
-							],
-							"path": [
-								"dev",
-								"recipes",
-								"<recipe_id>",
-								"attachment"
 							]
 						}
 					},
@@ -533,8 +494,199 @@
 					}
 				}
 			]
+		},
+		{
+			"name": "Attachments",
+			"item": [
+				{
+					"name": "Get attachment URL",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const schema = {\r",
+									"    \"$schema\": \"http://json-schema.org/draft-07/schema#\",\r",
+									"    \"type\": \"object\",\r",
+									"    \"required\": [\r",
+									"        \"attachmentUploadUrl\",\r",
+									"        \"attachmentDownloadUrl\"\r",
+									"    ],\r",
+									"    \"additionalProperties\": false,\r",
+									"    \"properties\": {\r",
+									"        \"attachmentUploadUrl\": {\r",
+									"            \"type\": \"string\",\r",
+									"        },\r",
+									"        \"attachmentDownloadUrl\": {\r",
+									"            \"type\": \"string\",\r",
+									"        }\r",
+									"    }\r",
+									"}\r",
+									"\r",
+									"pm.test('Schema is valid', function () {\r",
+									"     pm.response.to.have.jsonSchema(schema)\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{apiId}}.execute-api.{{region}}.amazonaws.com/dev/recipes/5e525ed3-34d0-4629-8e4b-9d4484cac08a/attachment",
+							"protocol": "https",
+							"host": [
+								"{{apiId}}",
+								"execute-api",
+								"{{region}}",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"recipes",
+								"5e525ed3-34d0-4629-8e4b-9d4484cac08a",
+								"attachment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upload attachment",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "fobar"
+						},
+						"url": {
+							"raw": "https://recipe-attachments-bucket-dev.s3.eu-central-1.amazonaws.com/github%7C11295060/5e525ed3-34d0-4629-8e4b-9d4484cac08a?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIAXP7ACZJJLRBQOLNC%2F20210222%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20210222T173155Z&X-Amz-Expires=300&X-Amz-Security-Token=IQoJb3JpZ2luX2VjENL%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDGV1LWNlbnRyYWwtMSJHMEUCIQDu%2B5speXj%2Fog8StdHkrdaj%2Fr%2FoOjZB0OIKtyQpar5SqgIgDeAAEX6JajYCoVDySqWJgS8QwWfkIqIX3zwIcTx6GnUq8wEI2%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARABGgw1MTUzMjkxNDk1MjIiDIVwnVxHgft2xAt%2BvSrHAecK8wKRMZuAil578%2BttvEPs2X0jEQxIIt%2Fk%2BmCm4%2FITy%2B3sFcC8d3YWdiBnrISfIj9e%2BwxfawoKF3%2FuMJdCTDnkKn6TMc7OKY3n%2B8XWlWKlWWempE2UPxkx9HFBx8c5B0YdvatwYKd3kBfjONkqVKjRnFgivrrEUasumBbVbZVXTjYUDw4quxOAqZ0jd%2BTTxZ90U%2F6JmK15l%2FD6NAGf3VxoTBfLmPsCty%2FDajeqqWAZ2qO%2F%2FgELSWR5t8fySvQGUlv4GD%2BoCZIwhtTPgQY64AG3uE6%2FHfxM0Reav0pqytreyiFvkh9rp2lTv9sqq6r25Heb9xc5nNco5prww3N6SOR2C3uvLiovKNPjOG%2BLXw3tpLXHOf9vFhIpHZMN8wElfwtYiFecYwYaGVzU0RXBhKNTk6v%2F4FcRXOY0OJzPAOCc8wV7Kp3fkDYiCb8V1noklgd3shCRMr3jqCaaiAH0XbnQgxzQvvqoUtwIrVNeI4PhntcA8zRnDb8%2Fa%2BVKmT0eXOmZh8rsZKnvIi5awasP4bPSOqlXDTIferwo%2FzSkXv7%2BrzlCjHvvoxx7edjjpOQyVQ%3D%3D&X-Amz-Signature=83bb193dbb3d975a543eeeb6a07b38758d4cef880a5e98484eb35c1c00d1bcab&X-Amz-SignedHeaders=host",
+							"protocol": "https",
+							"host": [
+								"recipe-attachments-bucket-dev",
+								"s3",
+								"eu-central-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"github%7C11295060",
+								"5e525ed3-34d0-4629-8e4b-9d4484cac08a"
+							],
+							"query": [
+								{
+									"key": "X-Amz-Algorithm",
+									"value": "AWS4-HMAC-SHA256"
+								},
+								{
+									"key": "X-Amz-Credential",
+									"value": "ASIAXP7ACZJJLRBQOLNC%2F20210222%2Feu-central-1%2Fs3%2Faws4_request"
+								},
+								{
+									"key": "X-Amz-Date",
+									"value": "20210222T173155Z"
+								},
+								{
+									"key": "X-Amz-Expires",
+									"value": "300"
+								},
+								{
+									"key": "X-Amz-Security-Token",
+									"value": "IQoJb3JpZ2luX2VjENL%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDGV1LWNlbnRyYWwtMSJHMEUCIQDu%2B5speXj%2Fog8StdHkrdaj%2Fr%2FoOjZB0OIKtyQpar5SqgIgDeAAEX6JajYCoVDySqWJgS8QwWfkIqIX3zwIcTx6GnUq8wEI2%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARABGgw1MTUzMjkxNDk1MjIiDIVwnVxHgft2xAt%2BvSrHAecK8wKRMZuAil578%2BttvEPs2X0jEQxIIt%2Fk%2BmCm4%2FITy%2B3sFcC8d3YWdiBnrISfIj9e%2BwxfawoKF3%2FuMJdCTDnkKn6TMc7OKY3n%2B8XWlWKlWWempE2UPxkx9HFBx8c5B0YdvatwYKd3kBfjONkqVKjRnFgivrrEUasumBbVbZVXTjYUDw4quxOAqZ0jd%2BTTxZ90U%2F6JmK15l%2FD6NAGf3VxoTBfLmPsCty%2FDajeqqWAZ2qO%2F%2FgELSWR5t8fySvQGUlv4GD%2BoCZIwhtTPgQY64AG3uE6%2FHfxM0Reav0pqytreyiFvkh9rp2lTv9sqq6r25Heb9xc5nNco5prww3N6SOR2C3uvLiovKNPjOG%2BLXw3tpLXHOf9vFhIpHZMN8wElfwtYiFecYwYaGVzU0RXBhKNTk6v%2F4FcRXOY0OJzPAOCc8wV7Kp3fkDYiCb8V1noklgd3shCRMr3jqCaaiAH0XbnQgxzQvvqoUtwIrVNeI4PhntcA8zRnDb8%2Fa%2BVKmT0eXOmZh8rsZKnvIi5awasP4bPSOqlXDTIferwo%2FzSkXv7%2BrzlCjHvvoxx7edjjpOQyVQ%3D%3D"
+								},
+								{
+									"key": "X-Amz-Signature",
+									"value": "83bb193dbb3d975a543eeeb6a07b38758d4cef880a5e98484eb35c1c00d1bcab"
+								},
+								{
+									"key": "X-Amz-SignedHeaders",
+									"value": "host"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
+	"auth": {
+		"type": "oauth2",
+		"oauth2": [
+			{
+				"key": "state",
+				"value": "05uraslkdnmvpod",
+				"type": "string"
+			},
+			{
+				"key": "client_authentication",
+				"value": "body",
+				"type": "string"
+			},
+			{
+				"key": "scope",
+				"value": "openid profile email",
+				"type": "string"
+			},
+			{
+				"key": "clientSecret",
+				"value": "{{auth0_client_secret}}",
+				"type": "string"
+			},
+			{
+				"key": "clientId",
+				"value": "{{auth0_client_id}}",
+				"type": "string"
+			},
+			{
+				"key": "accessTokenUrl",
+				"value": "https://{{auth0_domain}}/oauth/token",
+				"type": "string"
+			},
+			{
+				"key": "authUrl",
+				"value": "https://{{auth0_domain}}/authorize?audience={{auth0_audience}}",
+				"type": "string"
+			},
+			{
+				"key": "redirect_uri",
+				"value": "https://www.getpostman.com/oauth2/callback",
+				"type": "string"
+			},
+			{
+				"key": "tokenName",
+				"value": "Some token name",
+				"type": "string"
+			},
+			{
+				"key": "addTokenTo",
+				"value": "header",
+				"type": "string"
+			}
+		]
+	},
 	"event": [
 		{
 			"listen": "prerequest",
@@ -565,8 +717,22 @@
 			"value": "eu-central-1"
 		},
 		{
-			"key": "authToken",
-			"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImJCb19fZmE3enNjbzFudkJUR1Q0WCJ9.eyJpc3MiOiJodHRwczovL2Rldi1iaXJucWt6NC5ldS5hdXRoMC5jb20vIiwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMTc5MTg0Mjk3MTM5MzQzOTkxOTUiLCJhdWQiOiJSejJZTDhWQTBzZ0FpNUg2cWdCODN0U21RWHd5Y1R2QyIsImlhdCI6MTYxMzkyNDkwMSwiZXhwIjoxNjEzOTYwOTAxLCJhdF9oYXNoIjoiYVlNWVgtUml4ejFyb2Y5ZUVxaF9iQSIsIm5vbmNlIjoiY35ocGhCM1A2VGZBZ1QxTWM1RTFBZ0h1VlFNd3pUMkYifQ.fOt_PywTzRNP-reXNj3KuZXwD54HZAfzCvZ9HCpa-te7bYgS0H10VcmHZr4Fg4CFsPz0cIPFtHhcnqAWnBXT_G4KyzGTnTstdny8DTeqMmz17qQ3Yq9xO5nrle7JahiEr8D-0cyhmlVKXY-yGJyT-fId6hrAMwhz8Y_yL7JtNnt1AO8Ee2IhI1aIXMd7iS_Eteva2AeYg4Kx3xat1sGy1aPPlrSa1XvA2ko2pu6VLKpHiw2CrsAdjNnXVS4vfcYGJxWubuqemgkt70s0iv8JnH6WNqIjQT78TdslaCFtlKtXgPpzCnI7BKMVWdMVUYsnPs3dar5EixvPa5jpvomw0g"
+			"key": "auth0_domain",
+			"value": "dev-birnqkz4.eu.auth0.com"
+		},
+		{
+			"key": "auth0_client_id",
+			"value": "",
+			"disabled": true
+		},
+		{
+			"key": "auth0_client_secret",
+			"value": "",
+			"disabled": true
+		},
+		{
+			"key": "auth0_audience",
+			"value": "https://udacity-recipe-api/"
 		}
 	]
 }

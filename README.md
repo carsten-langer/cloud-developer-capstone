@@ -199,27 +199,69 @@ The application uses distributed tracing via X-Ray.
 
 # Postman 'Frontend'
 
+## Variables
+
+The provided Postman collection _Capstone Project.postman_collection.json_ contains already prefilled variables for
+
+`apiId`, `region`, `auth0_domain`, and `auth0_audience`.
+The variables `auth0_client_id` and `auth0_client_secret` must be filled by the reviewer with the value given in the project submission.
+
 ## Authentication
-//todo
 
-## Prepared statements
+The Postman collection _Udacity Cloud Developer Capstone Project_ is pre-configured to authenticate against
+the Auth0 service. The Auth0 service is preconfigured to allow Auth0, Google or GitHub accounts to use this recipe app.
 
-### Get all recipes
+As review please add the given values to the Postman collection variables `auth0_client_id` and `auth0_client_secret`.
+Then on collection level go to _Authorization_, then click _Get New Access Token_ and authenticate with one of the
+given options, then click _Use Token_.
+
+## Collection of prepared requests
+
+### Recipes
+
+#### Get all recipes
+
 Gets all recipe items of the user represented by the JWT token.
 Built-in tests check on HTTP return code 200 and schema of the answer.
 
-### Create recipe item
+#### Create recipe item
+
 Creates a new recipe item for the user represented by the JWT token.
 Built-in tests check on HTTP return code 201 and schema of the answer.
 
-### Create recipe item - malformed
+#### Create recipe item - malformed
+
 A malformed recipe creation request which will be rejected by API gateway schema checks.
 Built-in tests check on HTTP return code 400 and content of failure message.
 
-### Update recipe item
+#### Update recipe item
+
 Updates a new recipe item for the user represented by the JWT token.
 Built-in tests check on HTTP return code 204.
 
-### Update recipe item - malformed
+#### Update recipe item - malformed
+
 A malformed recipe update request which will be rejected by API gateway schema checks.
 Built-in tests check on HTTP return code 400 and content of failure message.
+
+### Attachments
+
+#### Get attachment URL
+
+Requests an URL to which the client could upload an attachment for the user represented by the JWT token.
+Built-in tests check on HTTP return code 200 and schema of the answer.
+
+Suggested test: After the upload URL is received, the recipe item data model for this recipe Id is not yet changed
+to include the attachment. This can be tested by calling the _Get all recipes_ API endpoint after getting the
+attachment URL.
+Then uploading the attachment to the given pre-signed URL using _Upload attachment_ request.
+Then call again the _Get all recipes_ API endpoint. Now the recipe item for which the attachment was uploaded
+contains the attachment URL.
+
+#### Upload attachment
+
+Stores an attachment in S3. To use it replace the whole URL with the pre-signed URL received from _Get attachment URL_
+request.
+Built-in tests check on HTTP return code 200 and schema of the answer.
+
+Suggested test: See _Get attachment URL_.
