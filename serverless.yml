@@ -24,7 +24,7 @@ custom:
 
 functions:
 
-  RS256Auth:
+  Auth0Authorizer:
     handler: src/lambda/auth/auth0Authorizer.handler
 
   GetRecipeItems:
@@ -34,7 +34,7 @@ functions:
           method: get
           path: recipes
           cors: true
-          authorizer: RS256Auth
+          authorizer: Auth0Authorizer
     environment:
       RECIPE_ITEMS_TABLE: ${self:custom.recipeItemsTable}
     iamRoleStatements:
@@ -55,7 +55,7 @@ functions:
           method: post
           path: recipes
           cors: true
-          authorizer: RS256Auth
+          authorizer: Auth0Authorizer
           request:
             schema:
               application/json: ${file(schemas/create-update-recipe-item-request.json)}
@@ -79,7 +79,7 @@ functions:
           method: patch
           path: recipes/{recipeId}
           cors: true
-          authorizer: RS256Auth
+          authorizer: Auth0Authorizer
           request:
             schema:
               application/json: ${file(schemas/create-update-recipe-item-request.json)}
@@ -96,16 +96,15 @@ functions:
           - xray:PutTelemetryRecords
         Resource: "*"
 
-  GenerateUploadUrl:
-    handler: src/lambda/http/generateUploadUrl.handler
+  GenerateAttachmentUploadUrl:
+    handler: src/lambda/http/generateAttachmentUploadUrl.handler
     events:
       - http:
           method: post
           path: recipes/{recipeId}/attachment
           cors: true
-          authorizer: RS256Auth
+          authorizer: Auth0Authorizer
     environment:
-      AttTODOS_TABLE: ${self:custom.todosTable}
       ATTACHMENTS_S3_BUCKET: ${self:custom.attachmentsS3Bucket}
       ATTACHMENTS_S3_SIGNED_URL_EXPIRATION: ${self:custom.attachmentsS3UrlExpirationSeconds}
     iamRoleStatements:
@@ -113,6 +112,27 @@ functions:
         Action:
           - s3:PutObject
         Resource: arn:aws:s3:::${self:custom.attachmentsS3Bucket}/*
+      - Effect: Allow
+        Action:
+          - xray:PutTraceSegments
+          - xray:PutTelemetryRecords
+        Resource: "*"
+
+  AddUploadedUrl:
+    handler: src/lambda/http/addUploadedAttachment.handler
+    events:
+      - s3:
+          bucket: ${self:custom.attachmentsS3Bucket}
+          existing: true
+    environment:
+      RECIPE_ITEMS_TABLE: ${self:custom.recipeItemsTable}
+      ATTACHMENTS_S3_BUCKET: ${self:custom.attachmentsS3Bucket}
+      ATTACHMENTS_S3_SIGNED_URL_EXPIRATION: ${self:custom.attachmentsS3UrlExpirationSeconds}
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:UpdateItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.recipeItemsTable}
       - Effect: Allow
         Action:
           - xray:PutTraceSegments

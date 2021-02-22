@@ -3,7 +3,9 @@ import {RecipeItemsAccess} from '../datalayer/RecipeItemsAccess'
 import {RecipeItemRequest} from '../requests/RecipeItemRequest'
 import {v4 as uuidv4} from 'uuid'
 import {AttachmentsAccess} from '../datalayer/AttachmentsAccess'
+import {createLogger} from '../utils/logger'
 
+const logger = createLogger('businesslogic')
 const recipeItemsAccess = new RecipeItemsAccess()
 const attachmentsAccess = new AttachmentsAccess()
 
@@ -29,6 +31,26 @@ export async function updateRecipeItem(userId: string, recipeId: string, recipeI
     return recipeItemsAccess.updateRecipeItem(userId, recipeId, recipeItemRequest)
 }
 
-export async function generateUploadUrl(userId: string, recipeId: string): Promise<{ downloadUrl: string, uploadUrl: string }> {
-    return attachmentsAccess.generateUploadUrl(userId + '/' + recipeId)
+export async function generateUrls(userId: string, recipeId: string): Promise<{ downloadUrl: string, uploadUrl: string }> {
+    logger.info("generateUrls", {userId, recipeId})
+    const key = encodeURIComponent(userId) + '/' + encodeURIComponent(recipeId)
+    return attachmentsAccess.generateUrls(key)
+}
+
+export async function addUploadedAttachment(key: string): Promise<void> {
+    logger.info("addUploadedAttachment-1", {key})
+    const split = key.split('/')
+    const userId = decodeURIComponent(decodeURIComponent(split[0]))
+    const recipeId = decodeURIComponent(decodeURIComponent(split[1]))
+    const reEncodedKey = encodeURIComponent(userId) + '/' + encodeURIComponent(recipeId)
+    const url = attachmentsAccess.generateUrls(reEncodedKey).downloadUrl
+
+    logger.info("addUploadedAttachment-2", {url, split, userId, recipeId})
+
+    return recipeItemsAccess.updateRecipeItemAttachment(userId, recipeId, url)
+}
+
+export async function deleteAttachment(userId: string, recipeId: string): Promise<void> {
+    logger.info("deleteAttachment", {userId, recipeId})
+    //const key = userId + '/' + recipeId
 }

@@ -15,7 +15,7 @@ export class RecipeItemsAccess {
     }
 
     async getRecipeItems(userId: string): Promise<RecipeItem[]> {
-        logger.info('getRecipeItems', userId)
+        logger.info('getRecipeItems', {userId})
         const result = await this.docClient.query({
             TableName: this.recipeItemsTable,
             KeyConditionExpression: 'userId = :userId',
@@ -26,7 +26,7 @@ export class RecipeItemsAccess {
     }
 
     async createRecipeItem(recipeItem: RecipeItem): Promise<void> {
-        logger.info('createRecipeItem', recipeItem)
+        logger.info('createRecipeItem', {recipeItem})
         await this.docClient.put({
             TableName: this.recipeItemsTable,
             Item: {...recipeItem}
@@ -47,6 +47,21 @@ export class RecipeItemsAccess {
                 ':recipe': recipeItemRequest.recipe
             },
             UpdateExpression: 'SET #name = :name, recipe = :recipe',
+        }).promise()
+    }
+
+    async updateRecipeItemAttachment(userId: string, recipeId: string, attachmentUrl: string): Promise<void> {
+        logger.info('updateRecipeItemAttachment', {userId, recipeId, attachmentUrl})
+        await this.docClient.update({
+            TableName: this.recipeItemsTable,
+            Key: {
+                userId: userId,
+                recipeId: recipeId
+            },
+            ExpressionAttributeValues: {
+                ':attachmentUrl': attachmentUrl
+            },
+            UpdateExpression: 'SET attachmentUrl = :attachmentUrl',
         }).promise()
     }
 }

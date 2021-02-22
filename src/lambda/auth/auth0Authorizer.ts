@@ -27,10 +27,10 @@ const cert = '-----BEGIN CERTIFICATE-----\n' +
     '-----END CERTIFICATE-----'
 
 export const handler = async (event: APIGatewayTokenAuthorizerEvent): Promise<APIGatewayAuthorizerResult> => {
-    logger.info('Authorizing a user', event)
+    logger.info('Authorizing a user', {event})
     try {
         const jwtToken = await verifyToken(event.authorizationToken)
-        logger.info('User was authorized', jwtToken)
+        logger.info('User was authorized', {jwtToken})
 
         return {
             principalId: jwtToken.sub,

@@ -18,7 +18,7 @@ Compared to the TODO application, this project features:
   but also the URL under which the attachment would be downloadable if it was uploaded.
   This eliminates the need for the client to again request all items for a user only to receive the attachment URL.
 - However, the data model will only contain an attachment URL if an attachment was really uploaded.
-  This is implemented by means of S3 notifying the backend via SNS that an object was uploaded.
+  This is implemented by means of S3 notifying the backend that an object was uploaded.
   In this way a client asking the backend for an upload URL but then _not_ uploading an object would not lead anymore
   to the backend assuming an object was uploaded in S3.
 - A client can delete the attachment without deleting the item.
@@ -142,7 +142,7 @@ Authorization is implemented via a Lambda authorizer (formerly known as a custom
 
 ## Functions
 
-### `auth`
+### `auth0Authorizer`
 
 A function implementing the Lambda authorizer (formerly known as a custom authorizer) for the API Gateway.
 
@@ -167,12 +167,6 @@ The id of the recipe item that should be updated is passed as a URL parameter.
 The request must follow the update request model shown above, which is enforced.
 It returns an empty answer.
 
-### `deleteRecipeItem`
-
-A function to delete a recipe and the associated attachment for the user requesting it.
-The id of the recipe item that should be deleted is passed as a URL parameter.
-It returns an empty answer.
-
 ### `generateAttachmentUploadUrl`
 
 A function to return a pre-signed URL that can be used to upload an attachment object for a recipe item
@@ -182,12 +176,25 @@ The id of the recipe item for which an attachment URL should be generated is pas
 
 It returns an upload URL and a download URL using the model of the attachment URL generation as shown above.
 
+### `addUploadAttachment`
+
+A function not to be called by a client, but instead called from S3 whenever an S3 object (attachment)
+was stored or updates.
+Will from the S3 object key determine the userId and recipeId and then store the attachment's URL to
+the recipe data stored in DynamoDB for this userId and recipeId.
+
 ### `deleteAttachment`
 
 A function to delete an attachment object for a recipe item for the user requesting it.
 The user id is extracted from the JWT token that is sent by the client.
 The id of the recipe item for which the attachment URL should be deleted is passed as a URL parameter.
 It is no error if the attachment object which should be deleted does not exist.
+
+### `deleteRecipeItem`
+
+A function to delete a recipe and the associated attachment for the user requesting it.
+The id of the recipe item that should be deleted is passed as a URL parameter.
+It returns an empty answer.
 
 ## Logging
 

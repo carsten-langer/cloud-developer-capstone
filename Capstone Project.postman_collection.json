@@ -276,7 +276,7 @@
 							"raw": "{\n\t\"name\": \"My famous desert\",\n\t\"recipe\": \"For this delicious desert you take ...\"\n}"
 						},
 						"url": {
-							"raw": "https://{{apiId}}.execute-api.{{region}}.amazonaws.com/dev/recipes/918087f7-b4e0-41e4-b9e7-7db15bf844a8",
+							"raw": "https://{{apiId}}.execute-api.{{region}}.amazonaws.com/dev/recipes/e55314d7-74a3-457e-b5dc-58bad97aa5d0",
 							"protocol": "https",
 							"host": [
 								"{{apiId}}",
@@ -288,7 +288,7 @@
 							"path": [
 								"dev",
 								"recipes",
-								"918087f7-b4e0-41e4-b9e7-7db15bf844a8"
+								"e55314d7-74a3-457e-b5dc-58bad97aa5d0"
 							]
 						}
 					},
@@ -550,7 +550,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://{{apiId}}.execute-api.{{region}}.amazonaws.com/dev/recipes/5e525ed3-34d0-4629-8e4b-9d4484cac08a/attachment",
+							"raw": "https://{{apiId}}.execute-api.{{region}}.amazonaws.com/dev/recipes/e55314d7-74a3-457e-b5dc-58bad97aa5d0/attachment",
 							"protocol": "https",
 							"host": [
 								"{{apiId}}",
@@ -562,7 +562,7 @@
 							"path": [
 								"dev",
 								"recipes",
-								"5e525ed3-34d0-4629-8e4b-9d4484cac08a",
+								"e55314d7-74a3-457e-b5dc-58bad97aa5d0",
 								"attachment"
 							]
 						}
@@ -579,10 +579,10 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "fobar"
+							"raw": "some attachment data"
 						},
 						"url": {
-							"raw": "https://recipe-attachments-bucket-dev.s3.eu-central-1.amazonaws.com/github%7C11295060/5e525ed3-34d0-4629-8e4b-9d4484cac08a?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIAXP7ACZJJLRBQOLNC%2F20210222%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20210222T173155Z&X-Amz-Expires=300&X-Amz-Security-Token=IQoJb3JpZ2luX2VjENL%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDGV1LWNlbnRyYWwtMSJHMEUCIQDu%2B5speXj%2Fog8StdHkrdaj%2Fr%2FoOjZB0OIKtyQpar5SqgIgDeAAEX6JajYCoVDySqWJgS8QwWfkIqIX3zwIcTx6GnUq8wEI2%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARABGgw1MTUzMjkxNDk1MjIiDIVwnVxHgft2xAt%2BvSrHAecK8wKRMZuAil578%2BttvEPs2X0jEQxIIt%2Fk%2BmCm4%2FITy%2B3sFcC8d3YWdiBnrISfIj9e%2BwxfawoKF3%2FuMJdCTDnkKn6TMc7OKY3n%2B8XWlWKlWWempE2UPxkx9HFBx8c5B0YdvatwYKd3kBfjONkqVKjRnFgivrrEUasumBbVbZVXTjYUDw4quxOAqZ0jd%2BTTxZ90U%2F6JmK15l%2FD6NAGf3VxoTBfLmPsCty%2FDajeqqWAZ2qO%2F%2FgELSWR5t8fySvQGUlv4GD%2BoCZIwhtTPgQY64AG3uE6%2FHfxM0Reav0pqytreyiFvkh9rp2lTv9sqq6r25Heb9xc5nNco5prww3N6SOR2C3uvLiovKNPjOG%2BLXw3tpLXHOf9vFhIpHZMN8wElfwtYiFecYwYaGVzU0RXBhKNTk6v%2F4FcRXOY0OJzPAOCc8wV7Kp3fkDYiCb8V1noklgd3shCRMr3jqCaaiAH0XbnQgxzQvvqoUtwIrVNeI4PhntcA8zRnDb8%2Fa%2BVKmT0eXOmZh8rsZKnvIi5awasP4bPSOqlXDTIferwo%2FzSkXv7%2BrzlCjHvvoxx7edjjpOQyVQ%3D%3D&X-Amz-Signature=83bb193dbb3d975a543eeeb6a07b38758d4cef880a5e98484eb35c1c00d1bcab&X-Amz-SignedHeaders=host",
+							"raw": "https://recipe-attachments-bucket-dev.s3.eu-central-1.amazonaws.com/github%257C11295060/e55314d7-74a3-457e-b5dc-58bad97aa5d0?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIAXP7ACZJJGAS33OUA%2F20210223%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20210223T091810Z&X-Amz-Expires=300&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEOH%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDGV1LWNlbnRyYWwtMSJGMEQCIGc%2FNIc6b66fRvZcpnEw7ADfZhVjubBqfbosb%2BBssKUKAiBhdhaRao%2Bm9GOHdyUIP3y5YdNvJ4eLddle8kc%2F%2F1qyEirzAQjq%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAEaDDUxNTMyOTE0OTUyMiIMdqFEVJUYHNkQP14BKscBXFGxlowXcBxbG9%2Fs0Zg2iRUyhU1wgbXpXjF9NOMKLVJsZZ02KIAXLreUEbUozkdkH%2FVYZ%2BI1ZVxsVZ19jF%2FKRz%2BdC1JHLWq%2BD2FxuF1EWv3zrADiH%2BRT5E0gmOwPAMIVBpPZqAsjYGum93nUdxkhH0v3G%2FebaJXyclg1TgNIHWeDzi9w7OdLwlCBgRxCASMPYtoeLoaiMPPM%2BqL4S5NAJ6VGk%2F1VlG87HXHnSD9u%2BE9yD0wNoebB2PmGcF2fYN%2B51PY3SHNWYTDzjtOBBjrhAXRcQ%2BW889ucZswckA8MrJZ0G3%2FtC0ecMotl1HJTEE4TG2K8OgmbAFT4A%2BD7FvkQ%2BLRDzPDl7uMnJ2h9qiB4sAm8V3pWzczjgXQtE5pTLmj7EqPi5d1P5gB%2BI65c2jOuuHkkLnIk4AsgrgOtmNS6PnEr7wQYbtp5EgrdQkReIP6aaXzDz0iE5uHnqazSh%2BtNdHHVV4CkDEgIWtoqvICcBeBMmINq7ujrNs4orJ1oV7bBOHmz6%2BxUQySPzQWt8ibh0rZEJknXvA%2BjCVjIxC9PL35m1N9C9KP4GVFZYVPrpTj5OA%3D%3D&X-Amz-Signature=29da5afc849f42d0234904772615c464bdc55c39d5a21715197b7f48485f254b&X-Amz-SignedHeaders=host",
 							"protocol": "https",
 							"host": [
 								"recipe-attachments-bucket-dev",
@@ -592,8 +592,8 @@
 								"com"
 							],
 							"path": [
-								"github%7C11295060",
-								"5e525ed3-34d0-4629-8e4b-9d4484cac08a"
+								"github%257C11295060",
+								"e55314d7-74a3-457e-b5dc-58bad97aa5d0"
 							],
 							"query": [
 								{
@@ -602,11 +602,11 @@
 								},
 								{
 									"key": "X-Amz-Credential",
-									"value": "ASIAXP7ACZJJLRBQOLNC%2F20210222%2Feu-central-1%2Fs3%2Faws4_request"
+									"value": "ASIAXP7ACZJJGAS33OUA%2F20210223%2Feu-central-1%2Fs3%2Faws4_request"
 								},
 								{
 									"key": "X-Amz-Date",
-									"value": "20210222T173155Z"
+									"value": "20210223T091810Z"
 								},
 								{
 									"key": "X-Amz-Expires",
@@ -614,11 +614,11 @@
 								},
 								{
 									"key": "X-Amz-Security-Token",
-									"value": "IQoJb3JpZ2luX2VjENL%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDGV1LWNlbnRyYWwtMSJHMEUCIQDu%2B5speXj%2Fog8StdHkrdaj%2Fr%2FoOjZB0OIKtyQpar5SqgIgDeAAEX6JajYCoVDySqWJgS8QwWfkIqIX3zwIcTx6GnUq8wEI2%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARABGgw1MTUzMjkxNDk1MjIiDIVwnVxHgft2xAt%2BvSrHAecK8wKRMZuAil578%2BttvEPs2X0jEQxIIt%2Fk%2BmCm4%2FITy%2B3sFcC8d3YWdiBnrISfIj9e%2BwxfawoKF3%2FuMJdCTDnkKn6TMc7OKY3n%2B8XWlWKlWWempE2UPxkx9HFBx8c5B0YdvatwYKd3kBfjONkqVKjRnFgivrrEUasumBbVbZVXTjYUDw4quxOAqZ0jd%2BTTxZ90U%2F6JmK15l%2FD6NAGf3VxoTBfLmPsCty%2FDajeqqWAZ2qO%2F%2FgELSWR5t8fySvQGUlv4GD%2BoCZIwhtTPgQY64AG3uE6%2FHfxM0Reav0pqytreyiFvkh9rp2lTv9sqq6r25Heb9xc5nNco5prww3N6SOR2C3uvLiovKNPjOG%2BLXw3tpLXHOf9vFhIpHZMN8wElfwtYiFecYwYaGVzU0RXBhKNTk6v%2F4FcRXOY0OJzPAOCc8wV7Kp3fkDYiCb8V1noklgd3shCRMr3jqCaaiAH0XbnQgxzQvvqoUtwIrVNeI4PhntcA8zRnDb8%2Fa%2BVKmT0eXOmZh8rsZKnvIi5awasP4bPSOqlXDTIferwo%2FzSkXv7%2BrzlCjHvvoxx7edjjpOQyVQ%3D%3D"
+									"value": "IQoJb3JpZ2luX2VjEOH%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDGV1LWNlbnRyYWwtMSJGMEQCIGc%2FNIc6b66fRvZcpnEw7ADfZhVjubBqfbosb%2BBssKUKAiBhdhaRao%2Bm9GOHdyUIP3y5YdNvJ4eLddle8kc%2F%2F1qyEirzAQjq%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAEaDDUxNTMyOTE0OTUyMiIMdqFEVJUYHNkQP14BKscBXFGxlowXcBxbG9%2Fs0Zg2iRUyhU1wgbXpXjF9NOMKLVJsZZ02KIAXLreUEbUozkdkH%2FVYZ%2BI1ZVxsVZ19jF%2FKRz%2BdC1JHLWq%2BD2FxuF1EWv3zrADiH%2BRT5E0gmOwPAMIVBpPZqAsjYGum93nUdxkhH0v3G%2FebaJXyclg1TgNIHWeDzi9w7OdLwlCBgRxCASMPYtoeLoaiMPPM%2BqL4S5NAJ6VGk%2F1VlG87HXHnSD9u%2BE9yD0wNoebB2PmGcF2fYN%2B51PY3SHNWYTDzjtOBBjrhAXRcQ%2BW889ucZswckA8MrJZ0G3%2FtC0ecMotl1HJTEE4TG2K8OgmbAFT4A%2BD7FvkQ%2BLRDzPDl7uMnJ2h9qiB4sAm8V3pWzczjgXQtE5pTLmj7EqPi5d1P5gB%2BI65c2jOuuHkkLnIk4AsgrgOtmNS6PnEr7wQYbtp5EgrdQkReIP6aaXzDz0iE5uHnqazSh%2BtNdHHVV4CkDEgIWtoqvICcBeBMmINq7ujrNs4orJ1oV7bBOHmz6%2BxUQySPzQWt8ibh0rZEJknXvA%2BjCVjIxC9PL35m1N9C9KP4GVFZYVPrpTj5OA%3D%3D"
 								},
 								{
 									"key": "X-Amz-Signature",
-									"value": "83bb193dbb3d975a543eeeb6a07b38758d4cef880a5e98484eb35c1c00d1bcab"
+									"value": "29da5afc849f42d0234904772615c464bdc55c39d5a21715197b7f48485f254b"
 								},
 								{
 									"key": "X-Amz-SignedHeaders",
@@ -722,13 +722,11 @@
 		},
 		{
 			"key": "auth0_client_id",
-			"value": "",
-			"disabled": true
+			"value": ""
 		},
 		{
 			"key": "auth0_client_secret",
-			"value": "",
-			"disabled": true
+			"value": ""
 		},
 		{
 			"key": "auth0_audience",

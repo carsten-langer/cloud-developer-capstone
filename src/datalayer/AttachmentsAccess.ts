@@ -13,14 +13,19 @@ export class AttachmentsAccess {
         private readonly bucket = attachmentsBucket) {
     }
 
-    generateUploadUrl(attachmentId: string): { downloadUrl: string, uploadUrl: string } {
+    generateUrls(key: string): { downloadUrl: string, uploadUrl: string } {
+        const {downloadUrl, uploadUrl} = this.getSignedUrls(key)
+        logger.info('generateUrls', {downloadUrl, uploadUrl})
+        return {downloadUrl, uploadUrl}
+    }
+
+    private getSignedUrls(key: string): { downloadUrl: string, uploadUrl: string } {
         const uploadUrl = this.s3Client.getSignedUrl('putObject', {
             Bucket: this.bucket,
-            Key: attachmentId,
+            Key: key,
             Expires: parseInt(urlExpiration)
         })
         const downloadUrl = uploadUrl.split('?')[0]
-        logger.info('generateUploadUrl', {downloadUrl, uploadUrl})
         return {downloadUrl, uploadUrl}
     }
 }

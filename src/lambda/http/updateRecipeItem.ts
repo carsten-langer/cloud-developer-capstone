@@ -9,7 +9,7 @@ const middy = require("middy")
 const logger = createLogger('updateRecipeItem')
 
 export const handler = middy(async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-    logger.info('Processing event', event)
+    logger.info('Processing event', {event})
 
     const userId = getUserId(event)
     const recipeId = event.pathParameters.recipeId
