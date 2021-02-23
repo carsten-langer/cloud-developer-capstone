@@ -64,6 +64,18 @@ export class RecipeItemsAccess {
             UpdateExpression: 'SET attachmentUrl = :attachmentUrl',
         }).promise()
     }
+
+    async deleteRecipeItemAttachment(userId: string, recipeId: string): Promise<void> {
+        logger.info('deleteRecipeItemAttachment', {userId, recipeId})
+        await this.docClient.update({
+            TableName: this.recipeItemsTable,
+            Key: {
+                userId: userId,
+                recipeId: recipeId
+            },
+            UpdateExpression: 'REMOVE attachmentUrl',
+        }).promise()
+    }
 }
 
 function createDynamoDBClient() {

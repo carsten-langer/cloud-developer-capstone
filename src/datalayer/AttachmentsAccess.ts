@@ -28,6 +28,14 @@ export class AttachmentsAccess {
         const downloadUrl = uploadUrl.split('?')[0]
         return {downloadUrl, uploadUrl}
     }
+
+    async deleteRecipeItemAttachment(key: string): Promise<void> {
+        logger.info('deleteRecipeItemAttachment', {key})
+        await this.s3Client.deleteObject( {
+            Bucket: this.bucket,
+            Key: key
+        }).promise()
+    }
 }
 
 function createS3Client() {

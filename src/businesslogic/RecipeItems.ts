@@ -33,7 +33,7 @@ export async function updateRecipeItem(userId: string, recipeId: string, recipeI
 
 export async function generateUrls(userId: string, recipeId: string): Promise<{ downloadUrl: string, uploadUrl: string }> {
     logger.info("generateUrls", {userId, recipeId})
-    const key = encodeURIComponent(userId) + '/' + encodeURIComponent(recipeId)
+    const key = encodeKey(userId, recipeId)
     return attachmentsAccess.generateUrls(key)
 }
 
@@ -42,8 +42,8 @@ export async function addUploadedAttachment(key: string): Promise<void> {
     const split = key.split('/')
     const userId = decodeURIComponent(decodeURIComponent(split[0]))
     const recipeId = decodeURIComponent(decodeURIComponent(split[1]))
-    const reEncodedKey = encodeURIComponent(userId) + '/' + encodeURIComponent(recipeId)
-    const url = attachmentsAccess.generateUrls(reEncodedKey).downloadUrl
+    const reencodedKey = encodeKey(userId, recipeId)
+    const url = attachmentsAccess.generateUrls(reencodedKey).downloadUrl
 
     logger.info("addUploadedAttachment-2", {url, split, userId, recipeId})
 
@@ -52,5 +52,11 @@ export async function addUploadedAttachment(key: string): Promise<void> {
 
 export async function deleteAttachment(userId: string, recipeId: string): Promise<void> {
     logger.info("deleteAttachment", {userId, recipeId})
-    //const key = userId + '/' + recipeId
+    await recipeItemsAccess.deleteRecipeItemAttachment(userId, recipeId)
+    const key = encodeKey(userId, recipeId)
+    await attachmentsAccess.deleteRecipeItemAttachment(key)
+}
+
+function encodeKey(userId: string, recipeId: string): string {
+    return encodeURIComponent(userId) + '/' + encodeURIComponent(recipeId);
 }

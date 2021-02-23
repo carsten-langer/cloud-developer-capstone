@@ -96,8 +96,8 @@ functions:
           - xray:PutTelemetryRecords
         Resource: "*"
 
-  GenerateAttachmentUploadUrl:
-    handler: src/lambda/http/generateAttachmentUploadUrl.handler
+  GenerateUploadUrl:
+    handler: src/lambda/http/generateUploadUrl.handler
     events:
       - http:
           method: post
@@ -129,6 +129,32 @@ functions:
       ATTACHMENTS_S3_BUCKET: ${self:custom.attachmentsS3Bucket}
       ATTACHMENTS_S3_SIGNED_URL_EXPIRATION: ${self:custom.attachmentsS3UrlExpirationSeconds}
     iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:UpdateItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.recipeItemsTable}
+      - Effect: Allow
+        Action:
+          - xray:PutTraceSegments
+          - xray:PutTelemetryRecords
+        Resource: "*"
+
+  DeleteAttachment:
+    handler: src/lambda/http/deleteAttachment.handler
+    events:
+      - http:
+          method: delete
+          path: recipes/{recipeId}
+          cors: true
+          authorizer: Auth0Authorizer
+    environment:
+      ATTACHMENTS_S3_BUCKET: ${self:custom.attachmentsS3Bucket}
+      RECIPE_ITEMS_TABLE: ${self:custom.recipeItemsTable}
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - s3:DeleteObject
+        Resource: arn:aws:s3:::${self:custom.attachmentsS3Bucket}/*
       - Effect: Allow
         Action:
           - dynamodb:UpdateItem

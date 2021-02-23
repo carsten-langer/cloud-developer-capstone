@@ -167,7 +167,7 @@ The id of the recipe item that should be updated is passed as a URL parameter.
 The request must follow the update request model shown above, which is enforced.
 It returns an empty answer.
 
-### `generateAttachmentUploadUrl`
+### `generateUploadUrl`
 
 A function to return a pre-signed URL that can be used to upload an attachment object for a recipe item
 for the user requesting it.
@@ -189,6 +189,7 @@ A function to delete an attachment object for a recipe item for the user request
 The user id is extracted from the JWT token that is sent by the client.
 The id of the recipe item for which the attachment URL should be deleted is passed as a URL parameter.
 It is no error if the attachment object which should be deleted does not exist.
+It returns an empty answer.
 
 ### `deleteRecipeItem`
 
