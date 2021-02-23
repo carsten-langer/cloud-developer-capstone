@@ -29,8 +29,8 @@ export class AttachmentsAccess {
         return {downloadUrl, uploadUrl}
     }
 
-    async deleteRecipeItemAttachment(key: string): Promise<void> {
-        logger.info('deleteRecipeItemAttachment', {key})
+    async deleteAttachment(key: string): Promise<void> {
+        logger.info('deleteAttachment', {key})
         await this.s3Client.deleteObject( {
             Bucket: this.bucket,
             Key: key

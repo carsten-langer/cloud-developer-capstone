@@ -276,7 +276,7 @@
 							"raw": "{\n\t\"name\": \"My famous desert\",\n\t\"recipe\": \"For this delicious desert you take ...\"\n}"
 						},
 						"url": {
-							"raw": "https://{{apiId}}.execute-api.{{region}}.amazonaws.com/dev/recipes/e55314d7-74a3-457e-b5dc-58bad97aa5d0",
+							"raw": "https://{{apiId}}.execute-api.{{region}}.amazonaws.com/dev/recipes/726b5421-d9a6-4754-860f-06bb262ef78d",
 							"protocol": "https",
 							"host": [
 								"{{apiId}}",
@@ -288,7 +288,7 @@
 							"path": [
 								"dev",
 								"recipes",
-								"e55314d7-74a3-457e-b5dc-58bad97aa5d0"
+								"726b5421-d9a6-4754-860f-06bb262ef78d"
 							]
 						}
 					},
@@ -354,7 +354,20 @@
 					"response": []
 				},
 				{
-					"name": "Delete recipe",
+					"name": "Delete recipe item",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "DELETE",
 						"header": [
@@ -369,7 +382,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://{{apiId}}.execute-api.{{region}}.amazonaws.com/dev/recipes/<recipe_id>",
+							"raw": "https://{{apiId}}.execute-api.{{region}}.amazonaws.com/dev/recipes/dc2e8f15-2c55-41dc-b240-92c93f988e21",
 							"protocol": "https",
 							"host": [
 								"{{apiId}}",
@@ -381,93 +394,7 @@
 							"path": [
 								"dev",
 								"recipes",
-								"<recipe_id>"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create recipe Copy",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 201\", function () {\r",
-									"    pm.response.to.have.status(201);\r",
-									"});\r",
-									"\r",
-									"const schema = {\r",
-									"    \"$schema\": \"http://json-schema.org/draft-07/schema#\",\r",
-									"    \"type\": \"object\",\r",
-									"    \"required\": [\r",
-									"        \"userId\",\r",
-									"        \"recipeId\",\r",
-									"        \"name\",\r",
-									"        \"recipe\"\r",
-									"    ],\r",
-									"    \"additionalProperties\": false,\r",
-									"    \"properties\": {\r",
-									"        \"userId\": {\r",
-									"            \"type\": \"string\",\r",
-									"        },\r",
-									"        \"recipeId\": {\r",
-									"            \"type\": \"string\",\r",
-									"        },\r",
-									"        \"name\": {\r",
-									"            \"type\": \"string\",\r",
-									"        },\r",
-									"        \"recipe\": {\r",
-									"            \"type\": \"string\",\r",
-									"        },\r",
-									"        \"attachments\": {\r",
-									"            \"type\": \"string\"\r",
-									"        }\r",
-									"    }\r",
-									"}\r",
-									"\r",
-									"pm.test('Schema is valid', function () {\r",
-									"     pm.response.to.have.jsonSchema(schema)\r",
-									"})\r",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"name\": \"My famous soup\",\n\t\"recipe\": \"Ingredients: ...\"\n}"
-						},
-						"url": {
-							"raw": "https://{{apiId}}.execute-api.{{region}}.amazonaws.com/dev/recipes",
-							"protocol": "https",
-							"host": [
-								"{{apiId}}",
-								"execute-api",
-								"{{region}}",
-								"amazonaws",
-								"com"
-							],
-							"path": [
-								"dev",
-								"recipes"
+								"dc2e8f15-2c55-41dc-b240-92c93f988e21"
 							]
 						}
 					},
@@ -550,7 +477,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://{{apiId}}.execute-api.{{region}}.amazonaws.com/dev/recipes/e55314d7-74a3-457e-b5dc-58bad97aa5d0/attachment",
+							"raw": "https://{{apiId}}.execute-api.{{region}}.amazonaws.com/dev/recipes/dc2e8f15-2c55-41dc-b240-92c93f988e21/attachment",
 							"protocol": "https",
 							"host": [
 								"{{apiId}}",
@@ -562,7 +489,7 @@
 							"path": [
 								"dev",
 								"recipes",
-								"e55314d7-74a3-457e-b5dc-58bad97aa5d0",
+								"dc2e8f15-2c55-41dc-b240-92c93f988e21",
 								"attachment"
 							]
 						}
@@ -582,7 +509,7 @@
 							"raw": "some attachment data"
 						},
 						"url": {
-							"raw": "https://recipe-attachments-bucket-dev.s3.eu-central-1.amazonaws.com/github%257C11295060/e55314d7-74a3-457e-b5dc-58bad97aa5d0?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIAXP7ACZJJGAS33OUA%2F20210223%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20210223T091810Z&X-Amz-Expires=300&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEOH%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDGV1LWNlbnRyYWwtMSJGMEQCIGc%2FNIc6b66fRvZcpnEw7ADfZhVjubBqfbosb%2BBssKUKAiBhdhaRao%2Bm9GOHdyUIP3y5YdNvJ4eLddle8kc%2F%2F1qyEirzAQjq%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAEaDDUxNTMyOTE0OTUyMiIMdqFEVJUYHNkQP14BKscBXFGxlowXcBxbG9%2Fs0Zg2iRUyhU1wgbXpXjF9NOMKLVJsZZ02KIAXLreUEbUozkdkH%2FVYZ%2BI1ZVxsVZ19jF%2FKRz%2BdC1JHLWq%2BD2FxuF1EWv3zrADiH%2BRT5E0gmOwPAMIVBpPZqAsjYGum93nUdxkhH0v3G%2FebaJXyclg1TgNIHWeDzi9w7OdLwlCBgRxCASMPYtoeLoaiMPPM%2BqL4S5NAJ6VGk%2F1VlG87HXHnSD9u%2BE9yD0wNoebB2PmGcF2fYN%2B51PY3SHNWYTDzjtOBBjrhAXRcQ%2BW889ucZswckA8MrJZ0G3%2FtC0ecMotl1HJTEE4TG2K8OgmbAFT4A%2BD7FvkQ%2BLRDzPDl7uMnJ2h9qiB4sAm8V3pWzczjgXQtE5pTLmj7EqPi5d1P5gB%2BI65c2jOuuHkkLnIk4AsgrgOtmNS6PnEr7wQYbtp5EgrdQkReIP6aaXzDz0iE5uHnqazSh%2BtNdHHVV4CkDEgIWtoqvICcBeBMmINq7ujrNs4orJ1oV7bBOHmz6%2BxUQySPzQWt8ibh0rZEJknXvA%2BjCVjIxC9PL35m1N9C9KP4GVFZYVPrpTj5OA%3D%3D&X-Amz-Signature=29da5afc849f42d0234904772615c464bdc55c39d5a21715197b7f48485f254b&X-Amz-SignedHeaders=host",
+							"raw": "https://recipe-attachments-bucket-dev.s3.eu-central-1.amazonaws.com/github%257C11295060/dc2e8f15-2c55-41dc-b240-92c93f988e21?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIAXP7ACZJJFK2GZ2PM%2F20210223%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20210223T110049Z&X-Amz-Expires=300&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEOP%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDGV1LWNlbnRyYWwtMSJHMEUCICkHl9bRcJyQUbcS%2Fsxe%2FfRZlA7gIuuJXXCcBcaK95sXAiEAiH3Lj1K18qFVTMALHIx0CGfii%2Fd1n%2B%2BXrhy7k5r40woq8wEI7P%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARABGgw1MTUzMjkxNDk1MjIiDLiRthQxTMO7KophKirHAUEiv7QRBUdXF0KXbG%2F6JcJ5qBMP7E%2FmI%2BPdD5Q2dP60c2uJ0MmWiHkyCj5BLzeEk%2FyitQXEssZet3V74xJdByTOXWAAFJMyjldaPeDWw31o1Q9AecxAGsZ7hlCqdq4OoTrm1KNozy%2B0JfzncZFMYUEz0s8wLv%2FfoQzTLAIvXGbKCjmSy34es0bSoJgOaqDH2wjcyoiu3HUxAp5i2HcV4nUX8ZYa5I1PzmvjiWv3UPF%2FIZ7cHtyTeVpueeCPylX5bwJXNT%2Bwik0w38DTgQY64AFGwBeE7h8vNVS2ZpvoScOdCF1iIJeqIFuPbK0k8tv37la9QiqDqUcAm9CKPAffutEXOG2md9VpkHRMzIZeQwPxqyLRWiW958q0gpiLcwljW6hScvs4t1XF1Pvf8%2FfILWEN%2FXmFAE8OFBVdprbfI1a%2Fc39C%2F%2FP6dTLb8bD7CerBaA4hA%2Bf0vMBlzP0EcUDYWStIXpgrykzgPTnsDh97Hnuv8atr67Cmif9tNC%2FTmCryAVxRljAuv%2BrzLchVW7DCJhs2fb9LvLe9gvfxYDMfK0YOV4biMDPjjTzGjy7yrauUzA%3D%3D&X-Amz-Signature=320c1d5c987511d2786ed15accd59668d199993a23ab0ac28d97a4979b81e1f7&X-Amz-SignedHeaders=host",
 							"protocol": "https",
 							"host": [
 								"recipe-attachments-bucket-dev",
@@ -593,7 +520,7 @@
 							],
 							"path": [
 								"github%257C11295060",
-								"e55314d7-74a3-457e-b5dc-58bad97aa5d0"
+								"dc2e8f15-2c55-41dc-b240-92c93f988e21"
 							],
 							"query": [
 								{
@@ -602,11 +529,11 @@
 								},
 								{
 									"key": "X-Amz-Credential",
-									"value": "ASIAXP7ACZJJGAS33OUA%2F20210223%2Feu-central-1%2Fs3%2Faws4_request"
+									"value": "ASIAXP7ACZJJFK2GZ2PM%2F20210223%2Feu-central-1%2Fs3%2Faws4_request"
 								},
 								{
 									"key": "X-Amz-Date",
-									"value": "20210223T091810Z"
+									"value": "20210223T110049Z"
 								},
 								{
 									"key": "X-Amz-Expires",
@@ -614,16 +541,64 @@
 								},
 								{
 									"key": "X-Amz-Security-Token",
-									"value": "IQoJb3JpZ2luX2VjEOH%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDGV1LWNlbnRyYWwtMSJGMEQCIGc%2FNIc6b66fRvZcpnEw7ADfZhVjubBqfbosb%2BBssKUKAiBhdhaRao%2Bm9GOHdyUIP3y5YdNvJ4eLddle8kc%2F%2F1qyEirzAQjq%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAEaDDUxNTMyOTE0OTUyMiIMdqFEVJUYHNkQP14BKscBXFGxlowXcBxbG9%2Fs0Zg2iRUyhU1wgbXpXjF9NOMKLVJsZZ02KIAXLreUEbUozkdkH%2FVYZ%2BI1ZVxsVZ19jF%2FKRz%2BdC1JHLWq%2BD2FxuF1EWv3zrADiH%2BRT5E0gmOwPAMIVBpPZqAsjYGum93nUdxkhH0v3G%2FebaJXyclg1TgNIHWeDzi9w7OdLwlCBgRxCASMPYtoeLoaiMPPM%2BqL4S5NAJ6VGk%2F1VlG87HXHnSD9u%2BE9yD0wNoebB2PmGcF2fYN%2B51PY3SHNWYTDzjtOBBjrhAXRcQ%2BW889ucZswckA8MrJZ0G3%2FtC0ecMotl1HJTEE4TG2K8OgmbAFT4A%2BD7FvkQ%2BLRDzPDl7uMnJ2h9qiB4sAm8V3pWzczjgXQtE5pTLmj7EqPi5d1P5gB%2BI65c2jOuuHkkLnIk4AsgrgOtmNS6PnEr7wQYbtp5EgrdQkReIP6aaXzDz0iE5uHnqazSh%2BtNdHHVV4CkDEgIWtoqvICcBeBMmINq7ujrNs4orJ1oV7bBOHmz6%2BxUQySPzQWt8ibh0rZEJknXvA%2BjCVjIxC9PL35m1N9C9KP4GVFZYVPrpTj5OA%3D%3D"
+									"value": "IQoJb3JpZ2luX2VjEOP%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDGV1LWNlbnRyYWwtMSJHMEUCICkHl9bRcJyQUbcS%2Fsxe%2FfRZlA7gIuuJXXCcBcaK95sXAiEAiH3Lj1K18qFVTMALHIx0CGfii%2Fd1n%2B%2BXrhy7k5r40woq8wEI7P%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARABGgw1MTUzMjkxNDk1MjIiDLiRthQxTMO7KophKirHAUEiv7QRBUdXF0KXbG%2F6JcJ5qBMP7E%2FmI%2BPdD5Q2dP60c2uJ0MmWiHkyCj5BLzeEk%2FyitQXEssZet3V74xJdByTOXWAAFJMyjldaPeDWw31o1Q9AecxAGsZ7hlCqdq4OoTrm1KNozy%2B0JfzncZFMYUEz0s8wLv%2FfoQzTLAIvXGbKCjmSy34es0bSoJgOaqDH2wjcyoiu3HUxAp5i2HcV4nUX8ZYa5I1PzmvjiWv3UPF%2FIZ7cHtyTeVpueeCPylX5bwJXNT%2Bwik0w38DTgQY64AFGwBeE7h8vNVS2ZpvoScOdCF1iIJeqIFuPbK0k8tv37la9QiqDqUcAm9CKPAffutEXOG2md9VpkHRMzIZeQwPxqyLRWiW958q0gpiLcwljW6hScvs4t1XF1Pvf8%2FfILWEN%2FXmFAE8OFBVdprbfI1a%2Fc39C%2F%2FP6dTLb8bD7CerBaA4hA%2Bf0vMBlzP0EcUDYWStIXpgrykzgPTnsDh97Hnuv8atr67Cmif9tNC%2FTmCryAVxRljAuv%2BrzLchVW7DCJhs2fb9LvLe9gvfxYDMfK0YOV4biMDPjjTzGjy7yrauUzA%3D%3D"
 								},
 								{
 									"key": "X-Amz-Signature",
-									"value": "29da5afc849f42d0234904772615c464bdc55c39d5a21715197b7f48485f254b"
+									"value": "320c1d5c987511d2786ed15accd59668d199993a23ab0ac28d97a4979b81e1f7"
 								},
 								{
 									"key": "X-Amz-SignedHeaders",
 									"value": "host"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete attachment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{apiId}}.execute-api.{{region}}.amazonaws.com/dev/recipes/dc2e8f15-2c55-41dc-b240-92c93f988e21/attachment",
+							"protocol": "https",
+							"host": [
+								"{{apiId}}",
+								"execute-api",
+								"{{region}}",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"recipes",
+								"dc2e8f15-2c55-41dc-b240-92c93f988e21",
+								"attachment"
 							]
 						}
 					},

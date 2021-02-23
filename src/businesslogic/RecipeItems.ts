@@ -52,9 +52,16 @@ export async function addUploadedAttachment(key: string): Promise<void> {
 
 export async function deleteAttachment(userId: string, recipeId: string): Promise<void> {
     logger.info("deleteAttachment", {userId, recipeId})
-    await recipeItemsAccess.deleteRecipeItemAttachment(userId, recipeId)
+    await recipeItemsAccess.deleteAttachment(userId, recipeId)
     const key = encodeKey(userId, recipeId)
-    await attachmentsAccess.deleteRecipeItemAttachment(key)
+    await attachmentsAccess.deleteAttachment(key)
+}
+
+export async function deleteRecipeItem(userId: string, recipeId: string): Promise<void> {
+    logger.info("deleteRecipeItem", {userId, recipeId})
+    await recipeItemsAccess.deleteRecipeItem(userId, recipeId)
+    const key = encodeKey(userId, recipeId)
+    await attachmentsAccess.deleteAttachment(key)
 }
 
 function encodeKey(userId: string, recipeId: string): string {

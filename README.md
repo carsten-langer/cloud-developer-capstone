@@ -193,7 +193,8 @@ It returns an empty answer.
 
 ### `deleteRecipeItem`
 
-A function to delete a recipe and the associated attachment for the user requesting it.
+A function to delete a recipe item and the associated attachment for the user requesting it.
+The user id is extracted from the JWT token that is sent by the client.
 The id of the recipe item that should be deleted is passed as a URL parameter.
 It returns an empty answer.
 
@@ -227,7 +228,7 @@ given options, then click _Use Token_.
 
 ### Recipes
 
-#### Get all recipes
+#### Get all recipe items
 
 Gets all recipe items of the user represented by the JWT token.
 Built-in tests check on HTTP return code 200 and schema of the answer.
@@ -252,6 +253,11 @@ Built-in tests check on HTTP return code 204.
 A malformed recipe update request which will be rejected by API gateway schema checks.
 Built-in tests check on HTTP return code 400 and content of failure message.
 
+#### Delete recipe item
+
+Deletes a recipe item and its potential attachment for the user represented by the JWT token.
+Built-in tests check on HTTP return code 204.
+
 ### Attachments
 
 #### Get attachment URL
@@ -273,3 +279,16 @@ request.
 Built-in tests check on HTTP return code 200 and schema of the answer.
 
 Suggested test: See _Get attachment URL_.
+Also try to download the attachment from the URL given in the recipe item's data model.
+
+#### Delete attachment
+
+Deletes an attachment from S3 and from the recipe item's data model.
+Built-in tests check on HTTP return code 204.
+
+Suggested test: After uploading the attachment to the given pre-signed URL using _Upload attachment_ request,
+call _Get all recipes_ API endpoint to see that the attachment's URL is part of the recipe item's data model.
+Now delete the attachment.
+Then call again the _Get all recipes_ API endpoint to see that the attachment's URL was deleted from
+the recipe item's data model.
+Try again to download the attachment from the given URL, which will fail as the object was removed from S3.

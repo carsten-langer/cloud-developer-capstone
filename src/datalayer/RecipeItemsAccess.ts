@@ -65,8 +65,8 @@ export class RecipeItemsAccess {
         }).promise()
     }
 
-    async deleteRecipeItemAttachment(userId: string, recipeId: string): Promise<void> {
-        logger.info('deleteRecipeItemAttachment', {userId, recipeId})
+    async deleteAttachment(userId: string, recipeId: string): Promise<void> {
+        logger.info('deleteAttachment', {userId, recipeId})
         await this.docClient.update({
             TableName: this.recipeItemsTable,
             Key: {
@@ -74,6 +74,17 @@ export class RecipeItemsAccess {
                 recipeId: recipeId
             },
             UpdateExpression: 'REMOVE attachmentUrl',
+        }).promise()
+    }
+
+    async deleteRecipeItem(userId: string, recipeId: string): Promise<void> {
+        logger.info('deleteRecipeItem', {userId, recipeId})
+        await this.docClient.delete({
+            TableName: this.recipeItemsTable,
+            Key: {
+                userId: userId,
+                recipeId: recipeId
+            }
         }).promise()
     }
 }

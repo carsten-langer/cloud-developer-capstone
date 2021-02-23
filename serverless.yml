@@ -144,7 +144,7 @@ functions:
     events:
       - http:
           method: delete
-          path: recipes/{recipeId}
+          path: recipes/{recipeId}/attachment
           cors: true
           authorizer: Auth0Authorizer
     environment:
@@ -158,6 +158,32 @@ functions:
       - Effect: Allow
         Action:
           - dynamodb:UpdateItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.recipeItemsTable}
+      - Effect: Allow
+        Action:
+          - xray:PutTraceSegments
+          - xray:PutTelemetryRecords
+        Resource: "*"
+
+  DeleteRecipeItem:
+    handler: src/lambda/http/deleteRecipeItem.handler
+    events:
+      - http:
+          method: delete
+          path: recipes/{recipeId}
+          cors: true
+          authorizer: Auth0Authorizer
+    environment:
+      ATTACHMENTS_S3_BUCKET: ${self:custom.attachmentsS3Bucket}
+      RECIPE_ITEMS_TABLE: ${self:custom.recipeItemsTable}
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - s3:DeleteObject
+        Resource: arn:aws:s3:::${self:custom.attachmentsS3Bucket}/*
+      - Effect: Allow
+        Action:
+          - dynamodb:DeleteItem
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.recipeItemsTable}
       - Effect: Allow
         Action:
