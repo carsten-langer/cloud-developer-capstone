@@ -29,7 +29,7 @@ suggested in [this discussion](https://knowledge.udacity.com/questions/406740).
 
 # Functionality of the application - Cooking Recipes Store
 
-This application is the backend for storing (cooking) recipes. It will allow creating/removing/updating/fetching recipe
+This application is the backend for storing cooking recipes. It will allow creating/removing/updating/fetching recipe
 items. Each recipe item can optionally have one attachment, e.g. an image of an intermediate steps, or the recipe in
 PDF format, or whatever makes sense for the client.
 The attachment can only be created after the recipe item was created. The attachment can be deleted without the
@@ -38,7 +38,7 @@ Each user only has access to recipe items that s/he has created.
 
 # Architecture
 
-The application stores recipe items as JSON structure in DynamoDB and attachments as objects in S3.
+The application stores recipe items as JSON structure in DynamoDB and attachments as binary objects in S3.
 
 ## Data models
 
@@ -50,20 +50,20 @@ the following fields:
 - `userId` (string) - id of the user owning this item
 - `recipeId` (string) - a unique id for a recipe item
 - `name` (string, min 1, max 100 chars) - name of a recipe item (e.g. "My famous soup")
-- `recipe` (string, min 1, max 10000 chars) - recipe itself in a form that the user can enter easily, and the client can
-  render nicely, e.g. MarkDown
-- `attachmentUrl` (string, optional) - a URL pointing to an object attached to a recipe item.
+- `recipe` (string, min 1, max 10000 chars) - the recipe itself in a form depending on the client.
+  Suggested using a form that the user can enter easily, and the client can render nicely, e.g. MarkDown
+- `attachmentUrl` (string, optional) - a URL pointing to a binary object attached to a recipe item.
   The object itself is stored in S3.
 
 Example:
 
 ```json
 {
-  "userId": "google-oauth2|11345",
+  "userId": "someuser",
   "recipeId": "5c37344f-2af2-4876-b70b-546d0cf7f0a5",
   "name": "My famous soup",
   "recipe": "Ingredients: ...",
-  "attachmentUrl": "https://some-bucket.s3.region.amazonaws.com/5c37344f-2af2-4876-b70b-546d0cf7f0a5"
+  "attachmentUrl": "https://some-bucket.s3.region.amazonaws.com/someuser/5c37344f-2af2-4876-b70b-546d0cf7f0a5"
 }
 ```
 
@@ -78,14 +78,14 @@ Example:
 {
   "recipes": [
     {
-      "userId": "google-oauth2|11345",
+      "userId": "someuser",
       "recipeId": "5c37344f-2af2-4876-b70b-546d0cf7f0a5",
       "name": "My famous soup",
       "recipe": "Ingredients: ...",
-      "attachmentUrl": "https://some-bucket.s3.region.amazonaws.com/5c37344f-2af2-4876-b70b-546d0cf7f0a5"
+      "attachmentUrl": "https://some-bucket.s3.region.amazonaws.com/someuser/5c37344f-2af2-4876-b70b-546d0cf7f0a5"
     },
     {
-      "userId": "google-oauth2|11345",
+      "userId": "someuser",
       "recipeId": "6325652a-026c-4e1c-b454-8b7bb0d5f48c",
       "name": "My famous desert",
       "recipe": "For this delicious desert you take ..."
@@ -99,8 +99,8 @@ Example:
 Each recipe item creation or update request contains the following fields:
 
 - `name` (string, min 1, max 100 chars) - name of a recipe item (e.g. "My famous soup")
-- `recipe` (string, min 1, max 10000 chars) - recipe itself in a form depending on the client. Suggested to use
-  a form that the user can enter easily, and the client can render nicely, e.g. MarkDown.
+- `recipe` (string, min 1, max 10000 chars) - the recipe itself in a form depending on the client.
+  Suggested using a form that the user can enter easily, and the client can render nicely, e.g. MarkDown
 
 Example:
 
@@ -119,8 +119,8 @@ Also contains the URL under which the attachment would be downloadable if it was
 
 ```json
 {
-  "attachmentUploadUrl": "https://some-bucket.s3.region.amazonaws.com/5c37344f-2af2-4876-b70b-546d0cf7f0a5?someauthorizationstring",
-  "attachmentDownloadUrl": "https://some-bucket.s3.region.amazonaws.com/5c37344f-2af2-4876-b70b-546d0cf7f0a5"
+  "attachmentUploadUrl": "https://some-bucket.s3.region.amazonaws.com/someuser/5c37344f-2af2-4876-b70b-546d0cf7f0a5?someauthorizationstring",
+  "attachmentDownloadUrl": "https://some-bucket.s3.region.amazonaws.com/someuser/5c37344f-2af2-4876-b70b-546d0cf7f0a5"
 }
 ```
 
@@ -150,13 +150,13 @@ A function implementing the Lambda authorizer (formerly known as a custom author
 
 A function to return all recipe items for the user requesting it.
 The user id is extracted from the JWT token that is sent by the client.
-The function returns the list of recipe items using the recipe items model shown above.
+The function returns the list of recipe items using the recipe items model as shown above.
 
 ### `createRecipeItem`
 
 A function to create a new recipe item for the user requesting it.
 The user id is extracted from the JWT token that is sent by the client.
-The request must follow the creation request model shown above, which is enforced.
+The request must follow the creation request model as shown above, which is enforced.
 The answer contains the new recipe using the recipe item model as shown above.
 
 ### `updateRecipeItem`
@@ -164,7 +164,7 @@ The answer contains the new recipe using the recipe item model as shown above.
 A function to update a recipe item for the user requesting it.
 The user id is extracted from the JWT token that is sent by the client.
 The id of the recipe item that should be updated is passed as a URL parameter.
-The request must follow the update request model shown above, which is enforced.
+The request must follow the update request model as shown above, which is enforced.
 It returns an empty answer.
 
 ### `generateUploadUrl`
@@ -173,14 +173,14 @@ A function to return a pre-signed URL that can be used to upload an attachment o
 for the user requesting it.
 The user id is extracted from the JWT token that is sent by the client.
 The id of the recipe item for which an attachment URL should be generated is passed as a URL parameter.
-
 It returns an upload URL and a download URL using the model of the attachment URL generation as shown above.
+The upload URL's expiration timeout is 5 min.
 
 ### `addUploadAttachment`
 
 A function not to be called by a client, but instead called from S3 whenever an S3 object (attachment)
-was stored or updates.
-Will from the S3 object key determine the userId and recipeId and then store the attachment's URL to
+was stored or updated.
+Will determine from the S3 object key the userId and recipeId and then store the attachment's URL to
 the recipe data stored in DynamoDB for this userId and recipeId.
 
 ### `deleteAttachment`
@@ -218,7 +218,9 @@ The variables `auth0_client_id` and `auth0_client_secret` must be filled by the 
 ## Authentication
 
 The Postman collection _Udacity Cloud Developer Capstone Project_ is pre-configured to authenticate against
-the Auth0 service. The Auth0 service is preconfigured to allow Auth0, Google or GitHub accounts to use this recipe app.
+the Auth0 service. The Auth0 service is pre-configured to allow Auth0, Google or GitHub accounts to use this recipe app.
+However, Google would not accept redirected login request from Postman as it considers Postman insecure.
+A real browser-based client could use Google.
 
 As review please add the given values to the Postman collection variables `auth0_client_id` and `auth0_client_secret`.
 Then on collection level go to _Authorization_, then click _Get New Access Token_ and authenticate with one of the
@@ -246,7 +248,7 @@ Built-in tests check on HTTP return code 400 and content of failure message.
 #### Update recipe item
 
 Updates a new recipe item for the user represented by the JWT token.
-Built-in tests check on HTTP return code 204.
+Built-in test checks on HTTP return code 204.
 
 #### Update recipe item - malformed
 
@@ -256,7 +258,7 @@ Built-in tests check on HTTP return code 400 and content of failure message.
 #### Delete recipe item
 
 Deletes a recipe item and its potential attachment for the user represented by the JWT token.
-Built-in tests check on HTTP return code 204.
+Built-in test checks on HTTP return code 204.
 
 ### Attachments
 
@@ -268,7 +270,7 @@ Built-in tests check on HTTP return code 200 and schema of the answer.
 Suggested test: After the upload URL is received, the recipe item data model for this recipe Id is not yet changed
 to include the attachment. This can be tested by calling the _Get all recipes_ API endpoint after getting the
 attachment URL.
-Then uploading the attachment to the given pre-signed URL using _Upload attachment_ request.
+Then upload the attachment to the given pre-signed URL using _Upload attachment_ request.
 Then call again the _Get all recipes_ API endpoint. Now the recipe item for which the attachment was uploaded
 contains the attachment URL.
 
@@ -276,7 +278,7 @@ contains the attachment URL.
 
 Stores an attachment in S3. To use it replace the whole URL with the pre-signed URL received from _Get attachment URL_
 request.
-Built-in tests check on HTTP return code 200 and schema of the answer.
+Built-in test checks on HTTP return code 200.
 
 Suggested test: See _Get attachment URL_.
 Also try to download the attachment from the URL given in the recipe item's data model.
@@ -284,7 +286,7 @@ Also try to download the attachment from the URL given in the recipe item's data
 #### Delete attachment
 
 Deletes an attachment from S3 and from the recipe item's data model.
-Built-in tests check on HTTP return code 204.
+Built-in test checks on HTTP return code 204.
 
 Suggested test: After uploading the attachment to the given pre-signed URL using _Upload attachment_ request,
 call _Get all recipes_ API endpoint to see that the attachment's URL is part of the recipe item's data model.

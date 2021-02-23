@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "bb231e2b-7ef0-4ce4-b6ae-16c630ce36b3",
-		"name": "Udacity Cloud Developer Capstone Project",
+		"name": "Udacity Cloud Developer Capstone Project - original",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -477,7 +477,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://{{apiId}}.execute-api.{{region}}.amazonaws.com/dev/recipes/dc2e8f15-2c55-41dc-b240-92c93f988e21/attachment",
+							"raw": "https://{{apiId}}.execute-api.{{region}}.amazonaws.com/dev/recipes/503110c4-0f3e-4e79-9897-1e9233fef9e5/attachment",
 							"protocol": "https",
 							"host": [
 								"{{apiId}}",
@@ -489,7 +489,7 @@
 							"path": [
 								"dev",
 								"recipes",
-								"dc2e8f15-2c55-41dc-b240-92c93f988e21",
+								"503110c4-0f3e-4e79-9897-1e9233fef9e5",
 								"attachment"
 							]
 						}
@@ -498,6 +498,19 @@
 				},
 				{
 					"name": "Upload attachment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "noauth"
@@ -509,7 +522,7 @@
 							"raw": "some attachment data"
 						},
 						"url": {
-							"raw": "https://recipe-attachments-bucket-dev.s3.eu-central-1.amazonaws.com/github%257C11295060/dc2e8f15-2c55-41dc-b240-92c93f988e21?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIAXP7ACZJJFK2GZ2PM%2F20210223%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20210223T110049Z&X-Amz-Expires=300&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEOP%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDGV1LWNlbnRyYWwtMSJHMEUCICkHl9bRcJyQUbcS%2Fsxe%2FfRZlA7gIuuJXXCcBcaK95sXAiEAiH3Lj1K18qFVTMALHIx0CGfii%2Fd1n%2B%2BXrhy7k5r40woq8wEI7P%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARABGgw1MTUzMjkxNDk1MjIiDLiRthQxTMO7KophKirHAUEiv7QRBUdXF0KXbG%2F6JcJ5qBMP7E%2FmI%2BPdD5Q2dP60c2uJ0MmWiHkyCj5BLzeEk%2FyitQXEssZet3V74xJdByTOXWAAFJMyjldaPeDWw31o1Q9AecxAGsZ7hlCqdq4OoTrm1KNozy%2B0JfzncZFMYUEz0s8wLv%2FfoQzTLAIvXGbKCjmSy34es0bSoJgOaqDH2wjcyoiu3HUxAp5i2HcV4nUX8ZYa5I1PzmvjiWv3UPF%2FIZ7cHtyTeVpueeCPylX5bwJXNT%2Bwik0w38DTgQY64AFGwBeE7h8vNVS2ZpvoScOdCF1iIJeqIFuPbK0k8tv37la9QiqDqUcAm9CKPAffutEXOG2md9VpkHRMzIZeQwPxqyLRWiW958q0gpiLcwljW6hScvs4t1XF1Pvf8%2FfILWEN%2FXmFAE8OFBVdprbfI1a%2Fc39C%2F%2FP6dTLb8bD7CerBaA4hA%2Bf0vMBlzP0EcUDYWStIXpgrykzgPTnsDh97Hnuv8atr67Cmif9tNC%2FTmCryAVxRljAuv%2BrzLchVW7DCJhs2fb9LvLe9gvfxYDMfK0YOV4biMDPjjTzGjy7yrauUzA%3D%3D&X-Amz-Signature=320c1d5c987511d2786ed15accd59668d199993a23ab0ac28d97a4979b81e1f7&X-Amz-SignedHeaders=host",
+							"raw": "https://recipe-attachments-bucket-dev.s3.eu-central-1.amazonaws.com/github%257C11295060/503110c4-0f3e-4e79-9897-1e9233fef9e5?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIAXP7ACZJJN5KNCXZA%2F20210223%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20210223T113848Z&X-Amz-Expires=300&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEOT%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDGV1LWNlbnRyYWwtMSJGMEQCIBSYpYtm%2Fxk6yqqByN5bPo5fxNbKIj2JxNeC4NjyY%2ByWAiBP2drKdPBa%2FXRwuDyGzxld2iSN9hjTm2TKy4Ox1dY1kyrzAQjt%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAEaDDUxNTMyOTE0OTUyMiIMFutjHGIc3P9UTb5qKscB9dkjq3vyOZo43dE1FyyJVrhTF4Vm6QBPjJx4Ofn2D5WzFASdRrF4%2B9zlLlL7hhdckNTAQoZVAQ39ECNyL%2BwPUyIL6%2BP698%2FtH%2B2349eLZUV%2FXq7C0O4FcidOfEFsG%2BurEgVbU83ml2L873NAf4rB%2FIIpXY6POsFsUQq7F4fd8fJhM2gdd1n%2BS1flM7IyTAdcaJ2P9KRMblgmAi0tmGKnYB537M9923lvOCSXZwzEVCkItgV4wjyG5JLGlWgSez3VKQQyMZPU9zDH0tOBBjrhAQY%2B6ZYVN093SyJDce9YJz6nvXa0dMxssF0SYc5Wd6UpLYogu5y0xVLxIwvQZN%2BpRBnZGg9heS0Gaks6xDIiRfe8d894JAVNrHJnWfmILi6oj959vU0y8t8dEnHFPbecpYxuymZhh8j8uhhJfo%2BvZVHQOW0VYw0i%2F%2BiE8jqafpZulUITspIWDVr8ng6AKYBnxLHG2%2Fj0MPXpVQNR2mepJ9g728MFtmuKBcpeLjQSo2jJiE70UiOJROIn67SjdFvu63p9Kyj38Ey7kY%2BzwyPPdEQ5tZidfKbiXyQxX52N12PSRA%3D%3D&X-Amz-Signature=96ccdde9f3bf2f846e0501a590f27f24dcb59a9bb3d07bd13bb26883ce426710&X-Amz-SignedHeaders=host",
 							"protocol": "https",
 							"host": [
 								"recipe-attachments-bucket-dev",
@@ -520,7 +533,7 @@
 							],
 							"path": [
 								"github%257C11295060",
-								"dc2e8f15-2c55-41dc-b240-92c93f988e21"
+								"503110c4-0f3e-4e79-9897-1e9233fef9e5"
 							],
 							"query": [
 								{
@@ -529,11 +542,11 @@
 								},
 								{
 									"key": "X-Amz-Credential",
-									"value": "ASIAXP7ACZJJFK2GZ2PM%2F20210223%2Feu-central-1%2Fs3%2Faws4_request"
+									"value": "ASIAXP7ACZJJN5KNCXZA%2F20210223%2Feu-central-1%2Fs3%2Faws4_request"
 								},
 								{
 									"key": "X-Amz-Date",
-									"value": "20210223T110049Z"
+									"value": "20210223T113848Z"
 								},
 								{
 									"key": "X-Amz-Expires",
@@ -541,11 +554,11 @@
 								},
 								{
 									"key": "X-Amz-Security-Token",
-									"value": "IQoJb3JpZ2luX2VjEOP%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDGV1LWNlbnRyYWwtMSJHMEUCICkHl9bRcJyQUbcS%2Fsxe%2FfRZlA7gIuuJXXCcBcaK95sXAiEAiH3Lj1K18qFVTMALHIx0CGfii%2Fd1n%2B%2BXrhy7k5r40woq8wEI7P%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARABGgw1MTUzMjkxNDk1MjIiDLiRthQxTMO7KophKirHAUEiv7QRBUdXF0KXbG%2F6JcJ5qBMP7E%2FmI%2BPdD5Q2dP60c2uJ0MmWiHkyCj5BLzeEk%2FyitQXEssZet3V74xJdByTOXWAAFJMyjldaPeDWw31o1Q9AecxAGsZ7hlCqdq4OoTrm1KNozy%2B0JfzncZFMYUEz0s8wLv%2FfoQzTLAIvXGbKCjmSy34es0bSoJgOaqDH2wjcyoiu3HUxAp5i2HcV4nUX8ZYa5I1PzmvjiWv3UPF%2FIZ7cHtyTeVpueeCPylX5bwJXNT%2Bwik0w38DTgQY64AFGwBeE7h8vNVS2ZpvoScOdCF1iIJeqIFuPbK0k8tv37la9QiqDqUcAm9CKPAffutEXOG2md9VpkHRMzIZeQwPxqyLRWiW958q0gpiLcwljW6hScvs4t1XF1Pvf8%2FfILWEN%2FXmFAE8OFBVdprbfI1a%2Fc39C%2F%2FP6dTLb8bD7CerBaA4hA%2Bf0vMBlzP0EcUDYWStIXpgrykzgPTnsDh97Hnuv8atr67Cmif9tNC%2FTmCryAVxRljAuv%2BrzLchVW7DCJhs2fb9LvLe9gvfxYDMfK0YOV4biMDPjjTzGjy7yrauUzA%3D%3D"
+									"value": "IQoJb3JpZ2luX2VjEOT%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDGV1LWNlbnRyYWwtMSJGMEQCIBSYpYtm%2Fxk6yqqByN5bPo5fxNbKIj2JxNeC4NjyY%2ByWAiBP2drKdPBa%2FXRwuDyGzxld2iSN9hjTm2TKy4Ox1dY1kyrzAQjt%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAEaDDUxNTMyOTE0OTUyMiIMFutjHGIc3P9UTb5qKscB9dkjq3vyOZo43dE1FyyJVrhTF4Vm6QBPjJx4Ofn2D5WzFASdRrF4%2B9zlLlL7hhdckNTAQoZVAQ39ECNyL%2BwPUyIL6%2BP698%2FtH%2B2349eLZUV%2FXq7C0O4FcidOfEFsG%2BurEgVbU83ml2L873NAf4rB%2FIIpXY6POsFsUQq7F4fd8fJhM2gdd1n%2BS1flM7IyTAdcaJ2P9KRMblgmAi0tmGKnYB537M9923lvOCSXZwzEVCkItgV4wjyG5JLGlWgSez3VKQQyMZPU9zDH0tOBBjrhAQY%2B6ZYVN093SyJDce9YJz6nvXa0dMxssF0SYc5Wd6UpLYogu5y0xVLxIwvQZN%2BpRBnZGg9heS0Gaks6xDIiRfe8d894JAVNrHJnWfmILi6oj959vU0y8t8dEnHFPbecpYxuymZhh8j8uhhJfo%2BvZVHQOW0VYw0i%2F%2BiE8jqafpZulUITspIWDVr8ng6AKYBnxLHG2%2Fj0MPXpVQNR2mepJ9g728MFtmuKBcpeLjQSo2jJiE70UiOJROIn67SjdFvu63p9Kyj38Ey7kY%2BzwyPPdEQ5tZidfKbiXyQxX52N12PSRA%3D%3D"
 								},
 								{
 									"key": "X-Amz-Signature",
-									"value": "320c1d5c987511d2786ed15accd59668d199993a23ab0ac28d97a4979b81e1f7"
+									"value": "96ccdde9f3bf2f846e0501a590f27f24dcb59a9bb3d07bd13bb26883ce426710"
 								},
 								{
 									"key": "X-Amz-SignedHeaders",
